@@ -1,0 +1,52 @@
+@import "./../../../assets/style/variable.scss";
+
+.session-tit {
+  padding: 0 14px;
+  height: 66px;
+  line-height: 66px;
+  color: $titColor;
+  position: relative;
+
+  a {
+    display: block;
+    font-size: 18px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 24px;
+    margin-top: -12px;
+    background: $bg;
+  }
+}
+
+.disc-recommend {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  //align-content: space-between;
+
+  .disc {
+    width: 33%;
+    display: block;
+
+    .disc-pic {
+
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    .disc-name {
+      padding: 0 10px;
+      font-size: 12px;
+      line-height: 20px;
+      color: $titColor;
+    }
+  }
+}

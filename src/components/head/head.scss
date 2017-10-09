@@ -1,0 +1,21 @@
+@import "./../../assets/style/variable.scss";
+@import "./../../assets/style/base.scss";
+.head {
+  height: $headHeight;
+  width: 100%;
+  background: $bg;
+
+  .nav {
+    height: $headHeight;
+    line-height: $headHeight;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+
+    a {
+      color: #fff;
+      margin: 0 10px;
+    }
+  }
+}
