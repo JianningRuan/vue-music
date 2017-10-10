@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import './assets/style/index.scss'
   import MHeader from './components/head/head.vue'
 export default {
   name: 'app',

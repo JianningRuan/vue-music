@@ -1,5 +1,10 @@
 @import "./../../../assets/style/variable.scss";
 
+.find-box {
+  flex: 1;
+  overflow: hidden;
+}
+
 .session-tit {
   padding: 0 14px;
   height: 66px;

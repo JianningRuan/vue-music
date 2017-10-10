@@ -1,6 +1,5 @@
 <template>
   <div class="find-box">
-
     <div class="banner" ref="f-banner" v-if="sliderArray.length">
       <slider :loop="true" :autoPlay="true">
         <li v-for="(slider, index) in sliderArray">
@@ -24,13 +23,13 @@
       </div>
     </div>
     <!--推荐歌单-end-->
-
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
   import './findMusic.scss'
   import { getRecommend, getDiscByTag } from './../../../api/recommend'
-  import slider from './../../../unit/slider/slider'
+  import slider from './../../../unit/slider/slider' //轮播图插件
+  import scroll from './../../../unit/scroll/scroll' //滚动插件
   export default {
     data(){
       return {
@@ -39,7 +38,8 @@
       }
     },
     components: {
-      slider
+      slider,
+      scroll
     },
     created: function () {
 
