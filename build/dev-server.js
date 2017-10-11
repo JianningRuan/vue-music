@@ -28,6 +28,7 @@ var compiler = webpack(webpackConfig)
 
 var apiRoutes = express.Router()
 
+//获取歌单
 apiRoutes.get('/getDiscList', function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
   axios.get(url, {
@@ -39,6 +40,21 @@ apiRoutes.get('/getDiscList', function (req, res) {
   }).then((response) => {
     res.json(response.data)
   }).catch((e) => {
+    console.log(e)
+  })
+})
+//获取mv
+apiRoutes.get('/getMVList', function(req, res){
+  var url = 'https://c.y.qq.com/v8/fcg-bin/getmv_by_tag';
+  axios.get(url, {
+    headers: {
+      referer: 'https://c.y.qq.com/',
+      host: 'c.y.qq.com'
+    },
+    params: req.query
+  }).then((response)=>{
+    res.json(response.data)
+  }).catch((e)=>{
     console.log(e)
   })
 })

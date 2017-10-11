@@ -1,28 +1,32 @@
 <template>
   <div class="find-box">
-    <div class="banner" ref="f-banner" v-if="sliderArray.length">
-      <slider :loop="true" :autoPlay="true">
-        <li v-for="(slider, index) in sliderArray">
-          <img v-bind:src="slider.picUrl" />
-        </li>
-      </slider>
-    </div>
+    <scroll :data="discArray" :listenScroll="true" :pullUp="true" v-on:scroll="listenScroll" v-on:scrollToEnd="toEnd">
+      <div ref="content">
+        <div class="banner" ref="f-banner" v-if="sliderArray.length">
+          <slider :loop="true" :autoPlay="true">
+            <li v-for="(slider, index) in sliderArray">
+              <img v-bind:src="slider.picUrl" />
+            </li>
+          </slider>
+        </div>
 
-    <!--推荐歌单-->
-    <div class="session-tit">
-      <a>推荐歌单<span></span></a>
-    </div>
-    <div class="session-box disc-recommend">
-      <div class="disc" v-for="disc in discArray">
-        <div class="disc-pic">
-          <img v-bind:src="disc.imgurl"/>
+        <!--推荐歌单-->
+        <div class="session-tit">
+          <a>推荐歌单<span></span></a>
         </div>
-        <div class="disc-name">
-          {{disc.dissname}}
+        <div class="session-box disc-recommend">
+          <div class="disc" v-for="disc in discArray">
+            <div class="disc-pic">
+              <img v-bind:src="disc.imgurl"/>
+            </div>
+            <div class="disc-name">
+              {{disc.dissname}}
+            </div>
+          </div>
         </div>
+        <!--推荐歌单-end-->
       </div>
-    </div>
-    <!--推荐歌单-end-->
+    </scroll>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -68,6 +72,15 @@
 
           console.log(res)
         })
+      },
+      //监听滚动
+      listenScroll(data){
+        console.log(data);
+        let aa = this.$refs.content.clientHeight;
+        console.log(aa);
+      },
+      toEnd(){
+        console.log('到底了');
       }
     }
   }

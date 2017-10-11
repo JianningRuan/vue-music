@@ -2,7 +2,7 @@ import jsonp from './jsonp'
 import {commonParam, options} from "./config";
 import axios from 'axios'
 
-//轮播图jsonp
+//轮播图 jsonp
 export function getRecommend() {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg';
   //合并json
@@ -16,7 +16,7 @@ export function getRecommend() {
   return jsonp(url, data, options);
 }
 
-//歌单jsonp
+//歌单 jsonp
 export function getDiscByTag() {
   //const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg';
   const url = '/api/getDiscList';
@@ -37,4 +37,24 @@ export function getDiscByTag() {
   }).then((res) => {
     return Promise.resolve(res.data)
   });
+}
+
+//MV jsonp
+export function getMVList(){
+  const url = '/api/getMVList';
+  const data = Object.assign({}, commonParam, {
+    jsonpCallback: 'MusicJsonCallback4902539406095505',
+    loginUin: 0,
+    hostUin: 0,
+    //outCharset: 'GB2312',
+    platform: 'yqq',
+    needNewCode:0,
+    cmd: 'shoubo',
+    lan: 'all'
+  });
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data);
+  })
 }

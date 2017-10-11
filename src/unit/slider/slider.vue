@@ -8,9 +8,9 @@
     </ul>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
   import './slider.scss'
-  import bscroll from 'better-scroll'
+  import BScroll from 'better-scroll'
   import { addClass } from './../../assets/js/common'
   export default {
     props: {
@@ -62,6 +62,7 @@
           this.sliderChildren[i].style.width = sliderBoxWidth + 'px';
           wrapperWidth += sliderBoxWidth
         }
+        //因为如果循环播放的话，前后各增加一个子元素
         if (this.loop && !isResize){
           wrapperWidth += 2 * sliderBoxWidth
         }
@@ -72,7 +73,7 @@
         //渲染banner导航
         this.dots = new Array(this.sliderChildren.length);
         //初始化幻灯片
-        this.slider = new bscroll(this.$refs.sliderBox, {
+        this.slider = new BScroll(this.$refs.sliderBox, {
           scrollX: true,
           scrollY: false,
           momentum: false,
@@ -91,7 +92,7 @@
           this.currentBannerIndex = pageIndex;
 
           if (this.autoPlay){
-            clearTimeout(this.timer)
+            clearTimeout(this.timer);
             this._play()
           }
         })
