@@ -68,7 +68,6 @@
           if (res.code === 0 ){
             console.log(res.data);
             this.sliderArray = res.data.slider;
-            //this.discArray = res.data.
           }
         })
       },
