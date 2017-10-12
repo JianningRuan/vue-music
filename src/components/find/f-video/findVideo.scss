@@ -17,3 +17,12 @@
     color: $titColor;
   }
 }
+
+/*loading*/
+.loading-wrapper {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -24px;
+}

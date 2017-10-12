@@ -4,7 +4,7 @@ export function addClass(el, className) {
   if (!isHasClass){
     let newClass = el.className.split(' ');
     newClass.push(className);
-    el.className = newClass.join('');
+    el.className = newClass.join(' ');
   }
 }
 

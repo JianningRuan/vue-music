@@ -1,11 +1,11 @@
 <template>
   <div class="find-box">
-    <scroll :data="discArray" :listenScroll="true" :pullUp="true" v-on:scroll="listenScroll" v-on:scrollToEnd="toEnd">
+    <scroll ref="scrollWrapper" :listenScroll="true" :pullUp="true" v-on:scroll="listenScroll" v-on:scrollToEnd="toEnd">
       <div ref="content">
         <div class="banner" ref="f-banner" v-if="sliderArray.length">
           <slider :loop="true" :autoPlay="true">
             <li v-for="(slider, index) in sliderArray">
-              <img v-bind:src="slider.picUrl" />
+              <img @load="loginImage" v-bind:src="slider.picUrl" />
             </li>
           </slider>
         </div>
@@ -17,12 +17,18 @@
         <div class="session-box disc-recommend">
           <div class="disc" v-for="disc in discArray">
             <div class="disc-pic">
-              <img v-bind:src="disc.imgurl"/>
+              <img  @load="loginImage" v-lazy="disc.imgurl"/>
             </div>
             <div class="disc-name">
               {{disc.dissname}}
             </div>
           </div>
+
+          <!--loading-->
+          <div class="loading-wrapper" v-show="!discArray.length">
+            <loading></loading>
+          </div>
+          <!--loading-end-->
         </div>
         <!--推荐歌单-end-->
       </div>
@@ -34,6 +40,7 @@
   import { getRecommend, getDiscByTag } from './../../../api/recommend'
   import slider from './../../../unit/slider/slider' //轮播图插件
   import scroll from './../../../unit/scroll/scroll' //滚动插件
+  import loading from './../../../unit/loading/loading' //loading插件
   export default {
     data(){
       return {
@@ -43,7 +50,8 @@
     },
     components: {
       slider,
-      scroll
+      scroll,
+      loading
     },
     created: function () {
 
@@ -69,9 +77,10 @@
           if (res.code === 0){
             this.discArray = res.data.list
           }
-
-          console.log(res)
         })
+      },
+      loginImage(){
+        this.$refs.scrollWrapper.refresh();
       },
       //监听滚动
       listenScroll(data){

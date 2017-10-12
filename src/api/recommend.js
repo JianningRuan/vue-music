@@ -46,7 +46,6 @@ export function getMVList(){
     jsonpCallback: 'MusicJsonCallback4902539406095505',
     loginUin: 0,
     hostUin: 0,
-    //outCharset: 'GB2312',
     platform: 'yqq',
     needNewCode:0,
     cmd: 'shoubo',
