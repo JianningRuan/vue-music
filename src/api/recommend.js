@@ -24,7 +24,7 @@ export function getDiscByTag() {
     platform: 'yqq',
     hostUin: 0,
     sin: 0,
-    ein: 29,
+    ein: 5, //从0开始，获取多少个
     sortId: 5,
     needNewCode: 0,
     categoryId: 10000000,
@@ -55,5 +55,28 @@ export function getMVList(){
     params: data
   }).then((res)=>{
     return Promise.resolve(res.data);
+  })
+}
+
+//电台 jsonp
+export function getRadioList(){
+  const url = '/api/getRadio';
+  const data = Object.assign({}, commonParam, {
+    channel: 'radio',
+    page: 'index',
+    tpl: 'wk',
+    new: 1,
+    p: 0.9943445672878066,
+    g_tk: 5381,
+    jsonpCallback: 'MusicJsonCallback5037345305510446',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode: 0
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
   })
 }

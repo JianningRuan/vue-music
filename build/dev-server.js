@@ -58,6 +58,21 @@ apiRoutes.get('/getMVList', function(req, res){
     console.log(e)
   })
 })
+//获取电台
+apiRoutes.get('/getRadio', function(req, res){
+  var url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_radiolist.fcg';
+  axios.get(url, {
+    headers: {
+      referer: 'https://c.y.qq.com/',
+      host: 'c.y.qq.com'
+    },
+    params: req.query
+  }).then((response)=>{
+    res.json(response.data)
+  }).catch((e)=>{
+    console.log(e)
+  })
+})
 app.use('/api', apiRoutes)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
