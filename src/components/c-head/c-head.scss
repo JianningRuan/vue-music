@@ -1,0 +1,28 @@
+@import './../../assets/style/variable';
+
+.c-header {
+  width: 100%;
+  height: 56px;
+  background: $bg;
+  position: relative;
+
+  h1 {
+    text-align: center;
+    line-height: 56px;
+    font-size: 18px;
+    color: #fff;
+  }
+
+  .return {
+    width: 56px;
+    height: 56px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    line-height: 56px;
+  }
+}

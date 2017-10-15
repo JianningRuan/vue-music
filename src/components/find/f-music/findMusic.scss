@@ -57,6 +57,18 @@
   }
 }
 
+.m-nav {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+
+  a {
+    font-size: 14px;
+    color: $titColor;
+  }
+}
+
 /*loading*/
 .loading-wrapper {
   position: absolute;

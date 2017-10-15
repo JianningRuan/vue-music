@@ -80,3 +80,25 @@ export function getRadioList(){
     return Promise.resolve(res.data)
   })
 }
+
+//歌手 jsonp
+export function getSinger() {
+  const url = '/api/getSinger';
+  const data = Object.assign({}, commonParam, {
+    channel: 'singer',
+    page: 'list',
+    key: 'all_all_all',
+    pagesize: 100,
+    pagenum: 1,
+    jsonCallback: 'GetSingerListCallback',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode:0
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}

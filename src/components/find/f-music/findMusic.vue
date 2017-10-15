@@ -10,6 +10,13 @@
           </slider>
         </div>
 
+        <!--nav-->
+        <div class="m-nav">
+          <router-link to="/singer">歌手</router-link>
+          <router-link to="/ranking">排行</router-link>
+          <router-link to="/classify-disc">分类歌单</router-link>
+        </div>
+        <!--nav-end-->
         <!--推荐歌单-->
         <div class="session-tit">
           <a>推荐歌单<span></span></a>

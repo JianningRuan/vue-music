@@ -7,6 +7,10 @@ import FVideo from './../components/find/f-video/findVideo'
 import FRadio from './../components/find/f-radio/findRadio'
 import Trends from '@/components/trends/trends'
 
+import Singer from '@/components/singer/singer'
+import Ranking from '@/components/ranking/ranking'
+import ClassifyDisc from '@/components/classifyDisc/classify-disc'
+
 Vue.use(Router)
 
 export default new Router({
@@ -47,6 +51,21 @@ export default new Router({
       path: '/trends',
       name: 'Trends',
       component: Trends
+    },
+    {
+      path: '/singer',
+      name: 'Singer',
+      component: Singer
+    },
+    {
+      path: '/ranking',
+      name: 'Ranking',
+      component: Ranking
+    },
+    {
+      path: '/classifyDisc',
+      name: 'ClassifyDisc',
+      component: ClassifyDisc
     }
   ]
 })
