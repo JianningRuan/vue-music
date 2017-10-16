@@ -1,25 +1,27 @@
 <template>
-  <div class="pos-wrapper flex-column">
-    <c-header :title="title"></c-header>
-    <div class="main">
-      <scroll ref="scroll">
-        <div>
-          <div class="singer-box" v-for="singer in singerList">
-            <div class="singer-tit">{{singer.title}}</div>
-            <div class="singer-list">
-              <div class="singer-item" v-for="singerItem in singer.item" @click="selectSinger(singerItem)">
-                <div class="singer-pic">
-                  <img @load="loadImage" v-lazy="singerItem.headPic"/>
+  <transition name="slide">
+    <div class="pos-wrapper flex-column">
+      <c-header :title="title"></c-header>
+      <div class="main">
+        <scroll ref="scroll">
+          <div>
+            <div class="singer-box" v-for="singer in singerList">
+              <div class="singer-tit">{{singer.title}}</div>
+              <div class="singer-list">
+                <div class="singer-item" v-for="singerItem in singer.item" @click="selectSinger(singerItem)">
+                  <div class="singer-pic">
+                    <img @load="loadImage" v-lazy="singerItem.headPic"/>
+                  </div>
+                  <div class="singer-cont">{{singerItem.name}}</div>
                 </div>
-                <div class="singer-cont">{{singerItem.name}}</div>
               </div>
             </div>
           </div>
-        </div>
-      </scroll>
+        </scroll>
+      </div>
+      <router-view></router-view>
     </div>
-    <router-view></router-view>
-  </div>
+  </transition>
 </template>
 <script type="text/ecmascript-6">
   import './singer.scss'

@@ -102,3 +102,25 @@ export function getSinger() {
     return Promise.resolve(res.data)
   })
 }
+
+//歌手详细信息-推荐歌曲
+export function getSingerRecommend(mid) {
+  const url = '/api/getSingerRecommend';
+  const data = Object.assign({}, commonParam, {
+    jsonCallback: 'MusicJsonCallbacksinger_track',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode: 0,
+    singermid: mid,
+    order: 'listen',
+    begin: 0,
+    num: 30,
+    songstatus: 1
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
