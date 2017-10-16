@@ -1,16 +1,13 @@
 <template>
   <div class="pos-wrapper flex-column">
-    <c-header>
-      <h1>歌手</h1>
-      <a class="return">&lt;</a>
-    </c-header>
+    <c-header :title="title"></c-header>
     <div class="main">
       <scroll ref="scroll">
         <div>
           <div class="singer-box" v-for="singer in singerList">
             <div class="singer-tit">{{singer.title}}</div>
             <div class="singer-list">
-              <div class="singer-item" v-for="singerItem in singer.item">
+              <div class="singer-item" v-for="singerItem in singer.item" @click="selectSinger(singerItem)">
                 <div class="singer-pic">
                   <img @load="loadImage" v-lazy="singerItem.headPic"/>
                 </div>
@@ -21,6 +18,7 @@
         </div>
       </scroll>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -33,7 +31,9 @@
   export default {
     data(){
       return {
-        singerList: []
+        title: '歌手',
+        singerList: [],
+        indexList: []
       }
     },
     components: {
@@ -100,6 +100,14 @@
           return a.title.charCodeAt(0) - b.title.charCodeAt(0)
         })
         return hot.concat(ret)
+      },
+      //选择歌手
+      selectSinger(singer){
+        console.log(singer)
+        this.$router.push({
+          path: `/singer/${singer.mid}`
+        })
+        this.$store.commit('setSinger', singer)
       }
     }
   }

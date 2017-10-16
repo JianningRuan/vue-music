@@ -8,6 +8,7 @@ import FRadio from './../components/find/f-radio/findRadio'
 import Trends from '@/components/trends/trends'
 
 import Singer from '@/components/singer/singer'
+import SingerDetail from './../components/singerDetail/singerDetail'
 import Ranking from '@/components/ranking/ranking'
 import ClassifyDisc from '@/components/classifyDisc/classify-disc'
 
@@ -55,7 +56,13 @@ export default new Router({
     {
       path: '/singer',
       name: 'Singer',
-      component: Singer
+      component: Singer,
+      children: [
+        {
+          path: ':id',
+          component: SingerDetail
+        }
+      ]
     },
     {
       path: '/ranking',
