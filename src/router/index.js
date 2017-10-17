@@ -12,6 +12,8 @@ import SingerDetail from './../components/singerDetail/singerDetail'
 import Ranking from '@/components/ranking/ranking'
 import ClassifyDisc from '@/components/classifyDisc/classify-disc'
 
+import Player from './../components/player/player'
+
 Vue.use(Router)
 
 export default new Router({
@@ -73,6 +75,11 @@ export default new Router({
       path: '/classifyDisc',
       name: 'ClassifyDisc',
       component: ClassifyDisc
+    },
+    {
+      path: '/player',
+      name: 'Player',
+      component: Player
     }
   ]
 })
