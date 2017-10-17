@@ -4,11 +4,11 @@
       <div class="back" @click="back">&lt;</div>
       <h1>{{title}}</h1>
     </div>
-    <div class="bg-image">
+    <div class="bg-image" ref="bgImage">
       <div class="filer"></div>
     </div>
     <scroll :data="songList">
-      <song-list :songList="songList"></song-list>
+      <song-list class="list" ref="list" :songList="songList"></song-list>
     </scroll>
   </div>
 </template>
@@ -35,9 +35,18 @@
       scroll,
       songList
     },
+    created(){},
+    mounted(){
+      this.$nextTick(()=>{
+        this.setTop();
+      })
+    },
     methods: {
       back(){
         this.$router.back()
+      },
+      setTop(){
+        this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
       }
     }
   }
