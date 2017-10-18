@@ -11,10 +11,15 @@
   import { getSingerRecommend } from './../../api/recommend'
   import { crateSongList } from  './../../assets/js/common'
   export default {
+    computed: {
+      ...mapGetters([
+        'singer'
+      ])
+    },
     data(){
       return {
         title: '',
-        singer: {},
+        //singer: {},
         songList: []
       }
     },
@@ -22,10 +27,12 @@
       CHeader,
       musicList
     },
-    created(){},
+    created(){
+      console.log(this.singer)
+    },
     mounted(){
       this.$nextTick(() => {
-        this.singer = this.$store.state.singer
+        //this.singer = this.$store.state.singer
         this.title = this.singer.name
         console.log(this.singer)
 
@@ -41,11 +48,5 @@
     watch: {},
     filters: {},
     methods: {}
-      /*,
-    computed: {
-      ...mapGetters([
-        'singer'
-      ])
-    }*/
   }
 </script>

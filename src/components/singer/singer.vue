@@ -28,6 +28,7 @@
   import CHeader from './../c-head/c-head'
   import { getSinger } from './../../api/recommend'
   import { singer } from  './../../assets/js/common'
+  import { mapMutations } from 'vuex'
   import scroll from './../../unit/scroll/scroll'
 
   export default {
@@ -109,8 +110,12 @@
         this.$router.push({
           path: `/singer/${singer.mid}`
         })
-        this.$store.commit('setSinger', singer)
-      }
+        //this.$store.commit('setSinger', singer)
+        this.setSinger(singer)
+      },
+      ...mapMutations({
+        setSinger: 'SET_SINGER'
+    })
     }
   }
 </script>

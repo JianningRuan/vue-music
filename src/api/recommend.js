@@ -17,7 +17,7 @@ export function getRecommend() {
 }
 
 //歌单 jsonp
-export function getDiscByTag() {
+export function getDiscByTag(num = 5) {
   //const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg';
   const url = '/api/getDiscList';
   const data = Object.assign({}, commonParam, {
@@ -25,7 +25,7 @@ export function getDiscByTag() {
     hostUin: 0,
     sin: 0,
     ein: 5, //从0开始，获取多少个
-    sortId: 5,
+    sortId: num,
     needNewCode: 0,
     categoryId: 10000000,
     rnd: Math.random(),
@@ -66,7 +66,7 @@ export function getRadioList(){
     page: 'index',
     tpl: 'wk',
     new: 1,
-    p: 0.9943445672878066,
+    p: Math.random(),
     g_tk: 5381,
     jsonpCallback: 'MusicJsonCallback5037345305510446',
     loginUin: 0,

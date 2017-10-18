@@ -28,6 +28,14 @@ html, body {
   background: #fff;
   z-index: 20;
 }
+.pos-bottom-wrapper {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  z-index: 20;
+}
 
 /*过渡动画*/
 .slide-enter-active, .slide-leave-active {

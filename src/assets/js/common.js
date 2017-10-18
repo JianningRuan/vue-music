@@ -24,7 +24,7 @@ export class singer {
 
 //创建歌曲资料
 export class song {
-  constructor({index, isNew, albumMid, albumName, songMid, songName, singer, image, url}){
+  constructor({index, isNew, albumMid, albumName, songMid, songName, singer,interval, image, url}){
     this.index = index;
     this.isNew = isNew;
     this.albumMid = albumMid;
@@ -32,6 +32,7 @@ export class song {
     this.songMid = songMid;
     this.songName = songName;
     this.singer = singer;
+    this.interval = interval;
     this.image = image;
     this.url = url
   }
@@ -53,6 +54,7 @@ export function crateSongList(songDate){
       songMid: val.musicData.songmid,
       songName: val.musicData.songname,
       singer: singer.join(' '),
+      interval: val.musicData.interval,
       image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.musicData.songmid}.jpg?max_age=2592000`,
       url: 'http://dl.stream.qqmusic.qq.com/C400003OUlho2HcRHC.m4a?vkey=11AA750B533B961727C635F483370296CC8F93E372380569A10B5AE1421F142CC83F5FA9AD84E6FEC7A93ACBE8E652008528CCFF0B22645F&guid=4467252985&uin=0&fromtag=66'
     }))

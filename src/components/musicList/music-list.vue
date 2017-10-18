@@ -8,7 +8,7 @@
       <div class="filer"></div>
     </div>
     <scroll :data="songList">
-      <song-list class="list" ref="list" :songList="songList"></song-list>
+      <song-list class="list" ref="list" :songList="songList" @select="selectItem"></song-list>
     </scroll>
   </div>
 </template>
@@ -16,6 +16,7 @@
   import './music-list.scss'
   import scroll from './../../unit/scroll/scroll'
   import songList from './../../unit/songList/song-list'
+  import { mapActions } from 'vuex'
   export default {
     props: {
       title: {
@@ -47,7 +48,17 @@
       },
       setTop(){
         this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
-      }
+      },
+      selectItem(song, index){
+        console.log(song)
+        this.playSelect({
+          list: this.songList,
+          index: index
+        })
+      },
+      ...mapActions([
+        'playSelect'
+      ])
     }
   }
 </script>

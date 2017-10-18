@@ -2,13 +2,14 @@
 
 .radio-wrapper {
   display: flex;
-  justify-content: space-between;
+  //justify-content: space-between;
   flex-wrap: wrap;
   align-content: flex-start;
   position: relative;
 
   .radio {
-    width: 33%;
+    width: 31.33%;
+    padding: 0 1% 0 1%;
 
     .radio-images {
       width: 100%;
