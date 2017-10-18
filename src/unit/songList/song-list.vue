@@ -1,6 +1,6 @@
 <template>
   <div class="song-list">
-    <ul>
+    <ul class="song-list-box">
       <li v-for="(song, index) in songList" @click="selectItem(song, index)">
         <h2>{{song.songName}}</h2>
         <p>{{song.singer}}</p>
