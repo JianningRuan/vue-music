@@ -1,3 +1,5 @@
+@import "./../../assets/style/variable";
+
 .music-list {}
 
 .m-head {
@@ -5,24 +7,25 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 56px;
+  height: $headHeight;
   z-index: 10;
 
   .back {
-    width: 56px;
-    height: 56px;
+    width: $headHeight;
+    height: $headHeight;
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
     text-align: center;
-    line-height: 56px;
+    line-height: $headHeight;
     font-size: 14px;
     color: #ccc;
   }
 
   h1 {
     text-align: center;
-    line-height: 56px;
+    line-height: $headHeight;
     font-size: 18px;
     font-weight: normal;
     color: #fff;

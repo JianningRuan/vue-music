@@ -2,20 +2,21 @@
 
 .c-header {
   width: 100%;
-  height: 56px;
+  height: $headHeight;
   background: $bg;
   position: relative;
 
   h1 {
     text-align: center;
-    line-height: 56px;
+    line-height: $headHeight;
     font-size: 18px;
     color: #fff;
+    font-weight: normal;
   }
 
   .return {
-    width: 56px;
-    height: 56px;
+    width: $headHeight;
+    height: $headHeight;
     position: absolute;
     top: 0;
     left: 0;
@@ -23,6 +24,6 @@
     text-align: center;
     font-size: 14px;
     color: #fff;
-    line-height: 56px;
+    line-height: $headHeight;
   }
 }

@@ -12,9 +12,18 @@
 
         <!--nav-->
         <div class="m-nav">
-          <router-link to="/singer"><i class="iconfont icon-user"></i>歌手</router-link>
-          <router-link to="/ranking"><i class="iconfont icon-ranking"></i>排行</router-link>
-          <router-link to="/classify-disc"><i class="iconfont icon-type"></i>分类歌单</router-link>
+          <router-link to="/singer">
+            <i class="icon iconfont icon-user"></i>
+            <i>歌手</i>
+          </router-link>
+          <router-link to="/ranking">
+            <i class="icon iconfont icon-ranking"></i>
+            <i>排行</i>
+          </router-link>
+          <router-link to="/classify-disc">
+            <i class="icon iconfont icon-type"></i>
+            <i>分类歌单</i>
+          </router-link>
         </div>
         <!--nav-end-->
         <!--推荐歌单-->
@@ -60,9 +69,7 @@
       scroll,
       loading
     },
-    created: function () {
-
-    },
+    created: function () {},
     mounted: function () {
       this.$nextTick(function () {
         this._getRecommend();
@@ -81,6 +88,7 @@
       _getDiscByTag(){
         getDiscByTag().then((res) => {
           if (res.code === 0){
+            console.log(res);
             this.discArray = res.data.list
           }
         })

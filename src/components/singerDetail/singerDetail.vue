@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <music-list :songList="songList" :title="title"></music-list>
+    <music-list :songList="songList" :title="title" :bg-image="bgImage"></music-list>
   </transition>
 </template>
 <script type="text/ecmascript-6">
@@ -12,6 +12,9 @@
   import { crateSongList } from  './../../assets/js/common'
   export default {
     computed: {
+      bgImage(){
+        return this.singer.headPic
+      },
       ...mapGetters([
         'singer'
       ])

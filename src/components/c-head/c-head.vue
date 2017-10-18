@@ -2,7 +2,9 @@
   <div class="c-header">
     <slot></slot>
     <h1 v-if="isShowTit">{{title}}</h1>
-    <a class="return" @click="back">&lt;</a>
+    <a class="return" @click="back">
+      <i class="iconfont icon-left"></i>
+    </a>
   </div>
 </template>
 <script type="text/ecmascript-6">

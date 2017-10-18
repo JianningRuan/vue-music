@@ -59,13 +59,32 @@
 
 .m-nav {
   width: 100%;
-  padding: 10px 0;
+  height: 28px;
+  padding: 20px 0 10px 0;
   display: flex;
   justify-content: space-around;
 
   a {
-    font-size: 14px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0;
     color: $titColor;
+    display: block;
+
+    i {
+      display: inline-block;
+      height: 28px;
+      vertical-align: middle;
+      font-size: 16px;
+    }
+
+    .icon {
+      color: $bg;
+      margin-right: 5px;
+      font-size: 22px;
+      vertical-align: middle;
+    }
   }
 }
 

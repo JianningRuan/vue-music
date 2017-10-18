@@ -1,10 +1,12 @@
 <template>
   <div class="pos-wrapper music-list">
     <div class="m-head">
-      <div class="back" @click="back">&lt;</div>
+      <a class="back" @click="back">
+        <i class="iconfont icon-left"></i>
+      </a>
       <h1>{{title}}</h1>
     </div>
-    <div class="bg-image" ref="bgImage">
+    <div class="bg-image" ref="bgImage" :style="setBgImage">
       <div class="filer"></div>
     </div>
     <scroll :data="songList">
@@ -59,6 +61,11 @@
       ...mapActions([
         'playSelect'
       ])
+    },
+    computed: {
+      setBgImage(){
+        return `background-image: url(${this.bgImage})`
+      }
     }
   }
 </script>
