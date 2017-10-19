@@ -14,6 +14,8 @@ import ClassifyDisc from '@/components/classifyDisc/classify-disc'
 
 import Player from './../components/player/player'
 
+import Disc from './../components/disc/disc'
+
 Vue.use(Router)
 
 export default new Router({
@@ -80,6 +82,11 @@ export default new Router({
       path: '/player',
       name: 'Player',
       component: Player
+    },
+    {
+      path: '/disc/:id',
+      name: 'Disc',
+      component: Disc
     }
   ]
 })

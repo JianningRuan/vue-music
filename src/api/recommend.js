@@ -1,5 +1,5 @@
 import jsonp from './jsonp'
-import {commonParam, options} from "./config";
+import {commonParam, options, homeDataParam} from "./config";
 import axios from 'axios'
 
 //轮播图 jsonp
@@ -17,15 +17,15 @@ export function getRecommend() {
 }
 
 //歌单 jsonp
-export function getDiscByTag(num = 5) {
+export function getDiscByTag(num = 17) {
   //const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg';
   const url = '/api/getDiscList';
   const data = Object.assign({}, commonParam, {
     platform: 'yqq',
     hostUin: 0,
     sin: 0,
-    ein: 5, //从0开始，获取多少个
-    sortId: num,
+    ein: num, //从0开始，获取多少个
+    sortId: 0,
     needNewCode: 0,
     categoryId: 10000000,
     rnd: Math.random(),
@@ -123,4 +123,24 @@ export function getSingerRecommend(mid) {
   }).then((res)=>{
     return Promise.resolve(res.data)
   })
+}
+
+//歌单详细
+export function getDiscDetail(disstId){
+  const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg';
+  const data = Object.assign({}, commonParam, {
+    uin: 0,
+    platform: 'h5',
+    needNewCode: 1,
+    new_format: 1,
+    pic: 500,
+    disstid: disstId,
+    type: 1,
+    json: 1,
+    utf8: 1,
+    onlysong: 0,
+    nosign: 1,
+    _: 1508401641998
+  })
+  return jsonp(url, data, options);
 }

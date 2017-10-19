@@ -31,7 +31,7 @@
           <a>推荐歌单<span></span></a>
         </div>
         <div class="session-box disc-recommend">
-          <div class="disc" v-for="disc in discArray">
+          <div class="disc" v-for="disc in discArray" @click="selectItem(disc)">
             <div class="disc-pic">
               <img @load="loginImage" v-lazy="disc.imgurl"/>
             </div>
@@ -95,6 +95,12 @@
       },
       loginImage(){
         this.$refs.scrollWrapper.refresh();
+      },
+      selectItem(disc){
+        console.log(disc);
+        this.$router.push({
+          path: `/disc/${disc.dissid}`
+        })
       },
       //监听滚动
       listenScroll(data){
