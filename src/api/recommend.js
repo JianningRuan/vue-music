@@ -127,23 +127,50 @@ export function getSingerRecommend(mid) {
 
 //歌单详细
 export function getDiscDetail(disstId){
-  const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg';
+  const url = '/api/getDiscDetail';
   const data = Object.assign({}, commonParam, {
-    uin: 0,
-    platform: 'h5',
-    needNewCode: 1,
-    new_format: 1,
-    pic: 500,
-    disstid:disstId,
     type: 1,
     json: 1,
     utf8: 1,
     onlysong: 0,
-    picmid: 1,
-    nosign: 1,
-    song_begin: 0,
-    song_num: 15,
-    _: 1508407898428
+    disstid: disstId,
+    g_tk: 5381,
+    jsonCallback: 'playlistinfoCallback',
+    loginUin: 0,
+    hostUin: 0,
+    inCharset: 'utf8',
+    outCharset: 'utf-8',
+    notice: 0,
+    platform: 'yqq',
+    needNewCode: 0
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
+
+//歌单详细
+/*export function getDiscDetail(disstId){
+  const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg';
+  const data = Object.assign({}, commonParam, {
+    type: 1,
+    json: 1,
+    utf8: 1,
+    onlysong: 0,
+    disstid: disstId,
+    format: 'jsonp',
+    g_tk: 5381,
+    jsonpCallback: 'playlistinfoCallback',
+    loginUin: 0,
+    hostUin: 0,
+    inCharset: 'utf8',
+    outCharset: 'utf-8',
+    notice: 0,
+    platform: 'yqq',
+    needNewCode: 0
   })
   return jsonp(url, data, options);
-}
+}*/
+
