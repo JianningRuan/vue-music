@@ -134,13 +134,16 @@ export function getDiscDetail(disstId){
     needNewCode: 1,
     new_format: 1,
     pic: 500,
-    disstid: disstId,
+    disstid:disstId,
     type: 1,
     json: 1,
     utf8: 1,
     onlysong: 0,
+    picmid: 1,
     nosign: 1,
-    _: 1508401641998
+    song_begin: 0,
+    song_num: 15,
+    _: 1508407898428
   })
   return jsonp(url, data, options);
 }

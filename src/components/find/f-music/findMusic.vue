@@ -33,10 +33,10 @@
         <div class="session-box disc-recommend">
           <div class="disc" v-for="disc in discArray" @click="selectItem(disc)">
             <div class="disc-pic">
-              <img @load="loginImage" v-lazy="disc.imgurl"/>
+              <img @load="loginImage" v-lazy="disc.picUrl"/>
             </div>
             <div class="disc-name">
-              {{disc.dissname}}
+              {{disc.songListDesc}}
             </div>
           </div>
 
@@ -73,7 +73,7 @@
     mounted: function () {
       this.$nextTick(function () {
         this._getRecommend();
-        this._getDiscByTag();
+        //this._getDiscByTag();
       })
     },
     methods: {
@@ -82,6 +82,8 @@
           if (res.code === 0 ){
             console.log(res.data);
             this.sliderArray = res.data.slider;
+
+            this.discArray = res.data.songList
           }
         })
       },
@@ -99,7 +101,7 @@
       selectItem(disc){
         console.log(disc);
         this.$router.push({
-          path: `/disc/${disc.dissid}`
+          path: `/disc/${disc.id}`
         })
       },
       //监听滚动
