@@ -24,6 +24,9 @@ const mutations = {
   },
   [types.SET_CURRENT_INDEX](state, currentIndex){
     state.currentIndex = currentIndex
+  },
+  [types.SET_DISC](state, disc){
+    state.disc = disc
   }
 }
 export default mutations

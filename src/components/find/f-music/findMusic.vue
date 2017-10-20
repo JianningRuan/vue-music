@@ -54,10 +54,12 @@
 <script type="text/ecmascript-6">
   import './findMusic.scss'
   import { getRecommend, getDiscByTag } from './../../../api/recommend'
+  import { mapMutations } from 'vuex'
   import slider from './../../../unit/slider/slider' //轮播图插件
   import scroll from './../../../unit/scroll/scroll' //滚动插件
   import loading from './../../../unit/loading/loading' //loading插件
   export default {
+    name: 'findMusic',
     data(){
       return {
         sliderArray: [], //轮播图数组
@@ -100,9 +102,11 @@
       },
       selectItem(disc){
         console.log(disc);
+        this.setDisc(disc)
         this.$router.push({
           path: `/disc/${disc.id}`
         })
+
       },
       //监听滚动
       listenScroll(data){
@@ -112,7 +116,10 @@
       },
       toEnd(){
         console.log('到底了');
-      }
+      },
+      ...mapMutations({
+        setDisc: 'SET_DISC'
+      })
     }
   }
 </script>
