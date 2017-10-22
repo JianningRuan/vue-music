@@ -12,6 +12,16 @@ export function hasClass(el, className) {
   return (' ' + el.className + ' ').indexOf(' ' + className + ' ') > -1;
 }
 
+export function getData(el, name, val) {
+  const prefix = 'data-'
+  name = prefix + name
+  if (val){
+    return el.setAttribute(name, val)
+  }else {
+    return el.getAttribute(name)
+  }
+}
+
 //创建歌手资料
 export class singer {
   constructor({id, mid, name}){

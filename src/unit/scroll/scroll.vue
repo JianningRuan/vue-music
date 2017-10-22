@@ -62,6 +62,12 @@
       },
       refresh(){//重置
         this.scroll.refresh();
+      },
+      scrollTo(){//滚动到
+        this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+      },
+      scrollToElement(){//滚动到指定元素
+        this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
       }
     },
     watch: {

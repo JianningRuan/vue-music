@@ -6,7 +6,7 @@
         <scroll ref="scroll">
           <div>
             <div class="singer-box" v-for="singer in singerList">
-              <div class="singer-tit">{{singer.title}}</div>
+              <div class="singer-tit" ref="singerTit">{{singer.title}}</div>
               <div class="singer-list">
                 <div class="singer-item" v-for="singerItem in singer.item" @click="selectSinger(singerItem)">
                   <div class="singer-pic">
@@ -19,6 +19,11 @@
           </div>
         </scroll>
       </div>
+      <div class="short-cut-list" @touchstart="touchStartShortCut">
+        <ul>
+          <li v-for="(letter, index) in shortCutList">{{letter}}</li>
+        </ul>
+      </div>
       <router-view></router-view>
     </div>
   </transition>
@@ -27,7 +32,7 @@
   import './singer.scss'
   import CHeader from './../c-head/c-head'
   import { getSinger } from './../../api/recommend'
-  import { singer } from  './../../assets/js/common'
+  import { singer, getData } from  './../../assets/js/common'
   import { mapMutations } from 'vuex'
   import scroll from './../../unit/scroll/scroll'
 
@@ -37,6 +42,13 @@
         title: '歌手',
         singerList: [],
         indexList: []
+      }
+    },
+    computed: {
+      shortCutList(){
+        return this.singerList.map((item)=>{
+          return item.title.substring(0,1)
+        })
       }
     },
     components: {
@@ -49,6 +61,7 @@
         getSinger().then((res)=>{
           console.log(res)
           this.singerList = this.crateSingerList(res.data.list);
+          console.log(this.singerList)
         })
       })
     },
@@ -113,9 +126,13 @@
         //this.$store.commit('setSinger', singer)
         this.setSinger(singer)
       },
+      touchStartShortCut(e){
+        let nowIndex = getData(e.target, 'index')
+        this.$refs.scroll.scrollToElement(this.$refs.singerTit[nowIndex], 0)
+      },
       ...mapMutations({
         setSinger: 'SET_SINGER'
-    })
+      })
     }
   }
 </script>
