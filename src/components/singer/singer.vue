@@ -18,7 +18,7 @@
             </div>
           </div>
         </scroll>
-        <div class="short-cut-list" v-on:touchstart="touchStartShortCut">
+        <div class="short-cut-list" @touchstart="touchStartShortCut" @touchmove.stop.prevent="touchMoveShortCut">
           <ul>
             <li v-for="(letter, index) in shortCutList" :data-index="index">{{letter}}</li>
           </ul>
@@ -35,6 +35,8 @@
   import { singer, getData } from  './../../assets/js/common'
   import { mapMutations } from 'vuex'
   import scroll from './../../unit/scroll/scroll'
+
+  let letterHeight = 24;
 
   export default {
     data(){
@@ -55,7 +57,9 @@
       CHeader,
       scroll
     },
-    created(){},
+    created(){
+      this.touch = {};
+    },
     mounted(){
       this.$nextTick( ()=>{
         getSinger().then((res)=>{
@@ -127,8 +131,19 @@
         this.setSinger(singer)
       },
       touchStartShortCut(e){
-        let nowIndex = getData(e.target, 'index')
-        this.$refs.scroll.scrollToElement(this.$refs.singerTit[nowIndex], 0)
+        let nowIndex = parseInt(getData(e.target, 'index'))
+        this.touch.y1 = e.touches[0].pageY
+        this.touch.nowIndex = nowIndex
+        this._scrollTo(nowIndex)
+      },
+      touchMoveShortCut(e){
+        this.touch.y2 = e.touches[0].pageY;
+        let nowIndex = (this.touch.y2 - this.touch.y1) / letterHeight | 0
+        let aa = this.touch.nowIndex + nowIndex
+        this._scrollTo(aa)
+      },
+      _scrollTo(index){
+        this.$refs.scroll.scrollToElement(this.$refs.singerTit[index], 0)
       },
       ...mapMutations({
         setSinger: 'SET_SINGER'
