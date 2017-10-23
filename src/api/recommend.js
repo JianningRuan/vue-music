@@ -151,3 +151,41 @@ export function getDiscDetail(disstId){
   })
 }
 
+//排行榜h5
+export function getRanking(){
+  const  url = '/api/getRanking';
+  const data = Object.assign({}, commonParam, {
+    g_tk: 5381,
+    uin: 0,
+    platform: 'h5',
+    needNewCode: 1,
+    _: 1508749457240
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
+
+//排行榜详情h5
+export function getRankingDetail(topId){
+  const url = '/api/getRankingDetail';
+  const data = Object.assign({}, commonParam, {
+    g_tk: 5381,
+    uin: 0,
+    platform: 'h5',
+    needNewCode: 1,
+    tpl: 3,
+    page: 'detail',
+    type: 'top',
+    topid: topId,
+    _: 1508751231431
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
+

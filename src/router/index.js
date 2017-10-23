@@ -10,6 +10,7 @@ import Trends from '@/components/trends/trends'
 import Singer from '@/components/singer/singer'
 import SingerDetail from './../components/singerDetail/singerDetail'
 import Ranking from '@/components/ranking/ranking'
+import RankingDetail from './../components/rankingDetail/ranking-detail'
 import ClassifyDisc from '@/components/classifyDisc/classify-disc'
 
 import Player from './../components/player/player'
@@ -71,7 +72,13 @@ export default new Router({
     {
       path: '/ranking',
       name: 'Ranking',
-      component: Ranking
+      component: Ranking,
+      children: [
+        {
+          path: ':id',
+          component: RankingDetail
+        }
+      ]
     },
     {
       path: '/classifyDisc',

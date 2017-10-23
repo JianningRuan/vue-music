@@ -18,11 +18,11 @@
             </div>
           </div>
         </scroll>
-      </div>
-      <div class="short-cut-list" @touchstart="touchStartShortCut">
-        <ul>
-          <li v-for="(letter, index) in shortCutList">{{letter}}</li>
-        </ul>
+        <div class="short-cut-list" v-on:touchstart="touchStartShortCut">
+          <ul>
+            <li v-for="(letter, index) in shortCutList" :data-index="index">{{letter}}</li>
+          </ul>
+        </div>
       </div>
       <router-view></router-view>
     </div>

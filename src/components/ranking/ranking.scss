@@ -1,0 +1,41 @@
+@import "./../../assets/style/variable";
+
+.ranking-box {
+  height: 100px;
+  margin: 10px 12px 10px 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+
+  .ranking-pic {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  .ranking-cont {
+    flex: 1;
+    height: 100px;
+    padding-left: 10px;
+
+    .title {
+      font-size: 16px;
+      color: $titColor;
+      line-height: 28px;
+    }
+
+    ul {
+      li {
+        height: 24px;
+        line-height: 24px;
+        color: #999;
+        font-size: 12px;
+      }
+    }
+  }
+}
