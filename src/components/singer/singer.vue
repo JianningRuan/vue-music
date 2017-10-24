@@ -18,9 +18,9 @@
             </div>
           </div>
         </scroll>
-        <div class="short-cut-list" v-on:touchstart="touchStartShortCut">
+        <div class="short-cut-list" @touchstart="touchStartShortCut" @touchmove.stop.prevent="touchMoveShortCut">
           <ul>
-            <li v-for="(letter, index) in shortCutList" :data-index="index">{{letter}}</li>
+            <li v-for="(letter, index) in shortCutList" :data-index="index" v-bind:class="{ 'current': currentIndex === index}">{{letter}}</li>
           </ul>
         </div>
       </div>
@@ -36,6 +36,8 @@
   import { mapMutations } from 'vuex'
   import scroll from './../../unit/scroll/scroll'
 
+  const letterHeight = 24;
+
   export default {
     data(){
       return {
@@ -43,7 +45,7 @@
         singerList: [],
         indexList: [],
         scrollY: -1, //y轴滚动的位置
-        index: 0 //初始化到快速导航的第一个
+        currentIndex: 0 //初始化到快速导航的第一个
       }
     },
     computed: {
@@ -58,6 +60,7 @@
       scroll
     },
     created(){
+      this.touch = {};
       this.probeType = 3;
       this.singerListHeight = [];
     },
@@ -71,10 +74,27 @@
     watch: {
       singerList(val){
         this.$nextTick(()=>{
-          console.log(val)
           this._setListHeight()
           //this.$refs.singerBox
         })
+      },
+      scrollY(newY){
+        //当newY > 0
+        if (newY > 0){
+          this.currentIndex = 0;
+          return
+        }
+        //当newY 在数组中间
+        for (let i = 0, l = this.singerListHeight.length - 1; i < l; i++){
+          let startHeight = this.singerListHeight[i]
+          let endHeight = this.singerListHeight[i + 1]
+          if (-newY >= startHeight && -newY < endHeight ){
+            this.currentIndex = i
+            return
+          }
+        }
+        //当newY到底
+        this.currentIndex = this.singerListHeight.length - 2
       }
     },
     filters: {},
@@ -138,22 +158,31 @@
         this.setSinger(singer)
       },
       touchStartShortCut(e){
-        let nowIndex = getData(e.target, 'index')
-        this.$refs.scroll.scrollToElement(this.$refs.singerTit[nowIndex], 0)
+        this.touch.nowIndex = parseInt(getData(e.target, 'index'))
+        this.touch.y1 = e.touches[0].pageY
+        this._scrollTo(this.touch.nowIndex)
+      },
+      touchMoveShortCut(e){
+        this.touch.y2 = e.touches[0].pageY
+        let nowList = (this.touch.y2 - this.touch.y1) / letterHeight | 0
+        this._scrollTo(nowList + this.touch.nowIndex)
       },
       listenScroll(pos){
         console.log(pos)
         this.scrollY = pos.y;
       },
+      _scrollTo(index){
+        this.$refs.scroll.scrollToElement(this.$refs.singerTit[index], 0)
+      },
       _setListHeight(){
         const singerBox = this.$refs.singerBox;
         let height = 0;
+        this.singerListHeight.push(height)
         for (let i = 0, l = singerBox.length; i < l; i++){
           let thisHeight = singerBox[i].clientHeight;
           height += thisHeight
           this.singerListHeight.push(height)
         }
-        console.log(this.singerListHeight)
       },
       ...mapMutations({
         setSinger: 'SET_SINGER'
