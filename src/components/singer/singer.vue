@@ -3,9 +3,9 @@
     <div class="pos-wrapper flex-column">
       <c-header :title="title"></c-header>
       <div class="main">
-        <scroll ref="scroll">
+        <scroll ref="scroll" :listenScroll="true" :probeType="probeType" @scroll="listenScroll">
           <div>
-            <div class="singer-box" v-for="singer in singerList">
+            <div class="singer-box" ref="singerBox" v-for="singer in singerList">
               <div class="singer-tit" ref="singerTit">{{singer.title}}</div>
               <div class="singer-list">
                 <div class="singer-item" v-for="singerItem in singer.item" @click="selectSinger(singerItem)">
@@ -41,7 +41,9 @@
       return {
         title: '歌手',
         singerList: [],
-        indexList: []
+        indexList: [],
+        scrollY: -1, //y轴滚动的位置
+        index: 0 //初始化到快速导航的第一个
       }
     },
     computed: {
@@ -55,17 +57,26 @@
       CHeader,
       scroll
     },
-    created(){},
+    created(){
+      this.probeType = 3;
+      this.singerListHeight = [];
+    },
     mounted(){
       this.$nextTick( ()=>{
         getSinger().then((res)=>{
-          console.log(res)
           this.singerList = this.crateSingerList(res.data.list);
-          console.log(this.singerList)
         })
       })
     },
-    watch: {},
+    watch: {
+      singerList(val){
+        this.$nextTick(()=>{
+          console.log(val)
+          this._setListHeight()
+          //this.$refs.singerBox
+        })
+      }
+    },
     filters: {},
     methods: {
       //
@@ -129,6 +140,20 @@
       touchStartShortCut(e){
         let nowIndex = getData(e.target, 'index')
         this.$refs.scroll.scrollToElement(this.$refs.singerTit[nowIndex], 0)
+      },
+      listenScroll(pos){
+        console.log(pos)
+        this.scrollY = pos.y;
+      },
+      _setListHeight(){
+        const singerBox = this.$refs.singerBox;
+        let height = 0;
+        for (let i = 0, l = singerBox.length; i < l; i++){
+          let thisHeight = singerBox[i].clientHeight;
+          height += thisHeight
+          this.singerListHeight.push(height)
+        }
+        console.log(this.singerListHeight)
       },
       ...mapMutations({
         setSinger: 'SET_SINGER'
