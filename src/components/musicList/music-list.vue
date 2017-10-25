@@ -9,7 +9,7 @@
     <div class="bg-image" ref="bgImage" :style="setBgImage">
       <div class="filer"></div>
     </div>
-    <scroll :data="songList">
+    <scroll ref="scroll" :data="songList">
       <song-list class="list" ref="list" :songList="songList" @select="selectItem"></song-list>
     </scroll>
   </div>
@@ -37,6 +37,12 @@
     components: {
       scroll,
       songList
+    },
+    watch:{
+      songList(){
+        console.log('ll')
+        this.$refs.scroll.refresh();
+      }
     },
     created(){},
     mounted(){

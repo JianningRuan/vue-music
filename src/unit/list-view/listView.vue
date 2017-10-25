@@ -55,7 +55,7 @@
     mounted(){},
     activated(){},
     watch: {
-      data(val){
+      data(){
         this.$nextTick(()=>{
           this._setListHeight()
         })
@@ -118,7 +118,7 @@
         this.$emit('selectItem', singer)
       },
       touchStartShortCut(e){
-        this.touch.nowIndex = parseInt(getData(e.target, 'index'))
+        this.touch.nowIndex = parseInt(getData(e.target, 'index'));
         this.touch.y1 = e.touches[0].pageY;
         this._scrollTo(this.touch.nowIndex)
       },
@@ -150,7 +150,7 @@
         let height = 0;
         this.singerListHeight.push(height);
         for (let i = 0, l = singerBox.length; i < l; i++){
-          height += singerBox[i].clientHeight;
+          height += singerBox[i].clientHeight + 10; //+10是因为margin-bottom=10
           this.singerListHeight.push(height)
         }
       }
