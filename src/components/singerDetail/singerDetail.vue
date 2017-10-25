@@ -34,6 +34,10 @@
       console.log(this.singer)
     },
     mounted(){
+      if (!this.singer.id){
+        this.$router.push('/singer')
+        return
+      }
       this.$nextTick(() => {
         //this.singer = this.$store.state.singer
         this.title = this.singer.name
