@@ -2,7 +2,7 @@
   <transition name="slide">
     <div class="pos-wrapper flex-column">
       <c-header :title="title"></c-header>
-      <div class="main">
+      <div class="main relative">
         <scroll ref="scroll" :listenScroll="true" :probeType="probeType" @scroll="listenScroll">
           <div>
             <div class="singer-box" ref="singerBox" v-for="singer in singerList">
@@ -23,6 +23,7 @@
             <li v-for="(letter, index) in shortCutList" :data-index="index" v-bind:class="{ 'current': currentIndex === index}">{{letter}}</li>
           </ul>
         </div>
+        <div class="list-tit-fixed" ref="listTitFixed" v-show="currentLetter">{{currentLetter}}</div>
       </div>
       <router-view></router-view>
     </div>
@@ -37,15 +38,17 @@
   import scroll from './../../unit/scroll/scroll'
 
   const letterHeight = 24;
+  const letterTitHeight = 18;
 
   export default {
     data(){
       return {
         title: '歌手',
         singerList: [],
-        indexList: [],
+        //indexList: [],
         scrollY: -1, //y轴滚动的位置
-        currentIndex: 0 //初始化到快速导航的第一个
+        currentIndex: 0, //初始化到快速导航的第一个
+        titTop: -1 //字母标题的偏移量
       }
     },
     computed: {
@@ -53,6 +56,17 @@
         return this.singerList.map((item)=>{
           return item.title.substring(0,1)
         })
+      },
+      currentLetter(){
+        //当拉到最顶部的时候
+        if (this.scrollY > 0){
+          return ''
+        }
+        if (this.singerList[this.currentIndex]){
+          return this.singerList[this.currentIndex].title
+        }else {
+          return ''
+        }
       }
     },
     components: {
@@ -90,11 +104,21 @@
           let endHeight = this.singerListHeight[i + 1]
           if (-newY >= startHeight && -newY < endHeight ){
             this.currentIndex = i
+            this.titTop = endHeight + newY
             return
           }
         }
         //当newY到底
         this.currentIndex = this.singerListHeight.length - 2
+      },
+      titTop(newTop){
+        let fixedTop = (newTop > 0 && newTop < letterTitHeight) ? newTop - letterTitHeight : 0;
+        //减少dom操作
+        if (this.fixedTop === fixedTop){
+          return
+        }
+        this.fixedTop = fixedTop;
+        this.$refs.listTitFixed.style.transform = `translate3d(0, ${fixedTop}px, 0)`
       }
     },
     filters: {},
@@ -170,7 +194,6 @@
         this._scrollTo(currentIndex)
       },
       listenScroll(pos){
-        console.log(pos)
         this.scrollY = pos.y;
       },
       _scrollTo(index){
@@ -191,8 +214,7 @@
         let height = 0;
         this.singerListHeight.push(height)
         for (let i = 0, l = singerBox.length; i < l; i++){
-          let thisHeight = singerBox[i].clientHeight;
-          height += thisHeight
+          height += singerBox[i].clientHeight;
           this.singerListHeight.push(height)
         }
       },

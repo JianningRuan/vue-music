@@ -44,20 +44,17 @@
         });
         if (this.listenScroll){
           this.scroll.on('scroll', (pos)=>{
-            console.log(this);
             this.$emit('scroll', pos)
           })
         }
         if (this.pullUp){
           this.scroll.on('scrollEnd', ()=>{
-            console.log(this.scroll.y, this.scroll.maxScrollY);
             if (this.scroll.y <= (this.scroll.maxScrollY + 50)){
               this.$emit('scrollToEnd')
             }
           })
         }
         this.scroll.on('pullingDown', ()=>{
-          console.log('wqwerrr');
         })
       },
       refresh(){//重置
