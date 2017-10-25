@@ -165,14 +165,26 @@
       touchMoveShortCut(e){
         this.touch.y2 = e.touches[0].pageY
         let nowList = (this.touch.y2 - this.touch.y1) / letterHeight | 0
-        this._scrollTo(nowList + this.touch.nowIndex)
+        let currentIndex = nowList + this.touch.nowIndex
+        this.currentIndex = currentIndex
+        this._scrollTo(currentIndex)
       },
       listenScroll(pos){
         console.log(pos)
         this.scrollY = pos.y;
       },
       _scrollTo(index){
-        this.$refs.scroll.scrollToElement(this.$refs.singerTit[index], 0)
+        let allSingerTit = this.$refs.singerTit
+        let nowIndex = 0;
+        if (index < 0){
+          nowIndex = 0
+        }else if (index > allSingerTit.length - 2){
+          nowIndex = allSingerTit.length - 1
+        }else {
+          nowIndex = index
+        }
+        this.currentIndex = nowIndex
+        this.$refs.scroll.scrollToElement(allSingerTit[nowIndex], 0)
       },
       _setListHeight(){
         const singerBox = this.$refs.singerBox;
