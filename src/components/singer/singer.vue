@@ -2,29 +2,7 @@
   <transition name="slide">
     <div class="pos-wrapper flex-column">
       <c-header :title="title"></c-header>
-      <div class="main relative">
-        <scroll ref="scroll" :listenScroll="true" :probeType="probeType" @scroll="listenScroll">
-          <div>
-            <div class="singer-box" ref="singerBox" v-for="singer in singerList">
-              <div class="singer-tit" ref="singerTit">{{singer.title}}</div>
-              <div class="singer-list">
-                <div class="singer-item" v-for="singerItem in singer.item" @click="selectSinger(singerItem)">
-                  <div class="singer-pic">
-                    <img @load="loadImage" v-lazy="singerItem.headPic"/>
-                  </div>
-                  <div class="singer-cont">{{singerItem.name}}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </scroll>
-        <div class="short-cut-list" @touchstart="touchStartShortCut" @touchmove.stop.prevent="touchMoveShortCut">
-          <ul>
-            <li v-for="(letter, index) in shortCutList" :data-index="index" v-bind:class="{ 'current': currentIndex === index}">{{letter}}</li>
-          </ul>
-        </div>
-        <div class="list-tit-fixed" ref="listTitFixed" v-show="currentLetter">{{currentLetter}}</div>
-      </div>
+      <list-view :data="singerList" @selectItem="selectSinger"></list-view>
       <router-view></router-view>
     </div>
   </transition>
@@ -35,49 +13,21 @@
   import { getSinger } from './../../api/recommend'
   import { singer, getData } from  './../../assets/js/common'
   import { mapMutations } from 'vuex'
-  import scroll from './../../unit/scroll/scroll'
-
-  const letterHeight = 24;
-  const letterTitHeight = 18;
+  import listView from './../../unit/list-view/listView'
 
   export default {
     data(){
       return {
         title: '歌手',
-        singerList: [],
-        //indexList: [],
-        scrollY: -1, //y轴滚动的位置
-        currentIndex: 0, //初始化到快速导航的第一个
-        titTop: -1 //字母标题的偏移量
+        singerList: []
       }
     },
-    computed: {
-      shortCutList(){
-        return this.singerList.map((item)=>{
-          return item.title.substring(0,1)
-        })
-      },
-      currentLetter(){
-        //当拉到最顶部的时候
-        if (this.scrollY > 0){
-          return ''
-        }
-        if (this.singerList[this.currentIndex]){
-          return this.singerList[this.currentIndex].title
-        }else {
-          return ''
-        }
-      }
-    },
+    computed: {},
     components: {
       CHeader,
-      scroll
+      listView
     },
-    created(){
-      this.touch = {};
-      this.probeType = 3;
-      this.singerListHeight = [];
-    },
+    created(){},
     mounted(){
       this.$nextTick( ()=>{
         getSinger().then((res)=>{
@@ -85,48 +35,9 @@
         })
       })
     },
-    watch: {
-      singerList(val){
-        this.$nextTick(()=>{
-          this._setListHeight()
-          //this.$refs.singerBox
-        })
-      },
-      scrollY(newY){
-        //当newY > 0
-        if (newY > 0){
-          this.currentIndex = 0;
-          return
-        }
-        //当newY 在数组中间
-        for (let i = 0, l = this.singerListHeight.length - 1; i < l; i++){
-          let startHeight = this.singerListHeight[i]
-          let endHeight = this.singerListHeight[i + 1]
-          if (-newY >= startHeight && -newY < endHeight ){
-            this.currentIndex = i
-            this.titTop = endHeight + newY
-            return
-          }
-        }
-        //当newY到底
-        this.currentIndex = this.singerListHeight.length - 2
-      },
-      titTop(newTop){
-        let fixedTop = (newTop > 0 && newTop < letterTitHeight) ? newTop - letterTitHeight : 0;
-        //减少dom操作
-        if (this.fixedTop === fixedTop){
-          return
-        }
-        this.fixedTop = fixedTop;
-        this.$refs.listTitFixed.style.transform = `translate3d(0, ${fixedTop}px, 0)`
-      }
-    },
+    watch: {},
     filters: {},
     methods: {
-      //
-      loadImage(){
-        this.$refs.scroll.refresh();
-      },
       //创建歌手列表格式
       crateSingerList(list){
         let map = {
@@ -134,7 +45,7 @@
             title: '热门',
             item: []
           }
-        }
+        };
         list.forEach((item, index)=>{
           if (index < 10){
             map.hot.item.push( new singer({
@@ -155,12 +66,12 @@
             mid: item.Fsinger_mid,
             name: item.Fsinger_name
           }))
-        })
+        });
         //排序
         let hot = [];
         let ret = [];
         for (let key in map){
-          let val = map[key]
+          let val = map[key];
           if (val.title.match(/[a-zA-Z]/)){
             ret.push(val)
           }else if (val.title == '热门'){
@@ -169,54 +80,15 @@
         }
         ret.sort((a, b)=>{
           return a.title.charCodeAt(0) - b.title.charCodeAt(0)
-        })
+        });
         return hot.concat(ret)
       },
       //选择歌手
       selectSinger(singer){
-        console.log(singer)
         this.$router.push({
           path: `/singer/${singer.mid}`
-        })
-        //this.$store.commit('setSinger', singer)
+        });
         this.setSinger(singer)
-      },
-      touchStartShortCut(e){
-        this.touch.nowIndex = parseInt(getData(e.target, 'index'))
-        this.touch.y1 = e.touches[0].pageY
-        this._scrollTo(this.touch.nowIndex)
-      },
-      touchMoveShortCut(e){
-        this.touch.y2 = e.touches[0].pageY
-        let nowList = (this.touch.y2 - this.touch.y1) / letterHeight | 0
-        let currentIndex = nowList + this.touch.nowIndex
-        this.currentIndex = currentIndex
-        this._scrollTo(currentIndex)
-      },
-      listenScroll(pos){
-        this.scrollY = pos.y;
-      },
-      _scrollTo(index){
-        let allSingerTit = this.$refs.singerTit
-        let nowIndex = 0;
-        if (index < 0){
-          nowIndex = 0
-        }else if (index > allSingerTit.length - 2){
-          nowIndex = allSingerTit.length - 1
-        }else {
-          nowIndex = index
-        }
-        this.currentIndex = nowIndex
-        this.$refs.scroll.scrollToElement(allSingerTit[nowIndex], 0)
-      },
-      _setListHeight(){
-        const singerBox = this.$refs.singerBox;
-        let height = 0;
-        this.singerListHeight.push(height)
-        for (let i = 0, l = singerBox.length; i < l; i++){
-          height += singerBox[i].clientHeight;
-          this.singerListHeight.push(height)
-        }
       },
       ...mapMutations({
         setSinger: 'SET_SINGER'

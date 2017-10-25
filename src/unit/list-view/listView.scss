@@ -1,0 +1,94 @@
+@import "./../../assets/style/variable";
+
+.singer-box {
+  width: 100%;
+  margin-bottom: 10px;
+
+  .singer-tit {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 12px;
+    color: #999;
+  }
+
+  .singer-list {
+    width: 100%;
+
+    .singer-item {
+      width: 100%;
+      display: flex;
+
+      .singer-pic {
+        width: 60px;
+        height: 60px;
+        margin: 10px 20px;
+        overflow: hidden;
+        border-radius: 50%;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .singer-cont {
+        flex: 1;
+        height: 60px;
+        line-height: 60px;
+        padding: 10px 0;
+        font-size: 14px;
+        color: $titColor;
+        position: relative;
+        //border-bottom: 1px solid #ccc;
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: #ccc;
+          transform: scaleY(0.5);
+        }
+      }
+    }
+  }
+}
+
+.short-cut-list {
+  position: fixed;
+  top: $headHeight;
+  right: 0;
+  margin-top: 28px;
+  width: 24px;
+
+  ul {
+
+    li {
+      text-align: center;
+      line-height: 24px;
+      font-size: 14px;
+      color: #666;
+
+      &.current {
+        color: $bg;
+      }
+    }
+  }
+}
+
+.list-tit-fixed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  height: 18px;
+  box-sizing: border-box;
+  line-height: 18px;
+  font-size: 12px;
+  color: #999;
+  background: #fff;
+}
