@@ -7,6 +7,9 @@
       <h1>{{title}}</h1>
     </div>
     <div class="bg-image" ref="bgImage" :style="setBgImage">
+      <div class="play-wrapper">
+        <a class="play-btn" ref="playBtn">播放全部</a>
+      </div>
       <div class="filer"></div>
     </div>
     <div class="bg-layer" ref="bgLayer"></div>
@@ -56,17 +59,19 @@
         if (newY < translateY){
           bgImage.style.zIndex = 6;
           bgImage.style.paddingTop = `${headHeight}px`;
+          this.$refs.playBtn.style.display = 'none'
           //bgImage.style.height = `${headHeight}px`
         }else {
           bgImage.style.zIndex = 0;
           bgImage.style.paddingTop = '70%';
+          this.$refs.playBtn.style.display = 'block'
           //bgImage.style.height = 0
         }
         if (newY > 0){
-          bgImage.style.height = `${newY}px`;
+          //bgImage.style.height = `${newY}px`;
           scale = 1 + percent
         }else {
-          bgImage.style.height = 0
+          //bgImage.style.height = 0
         }
         bgImage.style.transform = `scale(${scale})`;
         this.$refs.bgLayer.style.transform = `translate3d(0,${translateY}px,0)`;

@@ -39,6 +39,27 @@
   padding-top: 70%;
   transform-origin: top;
   background-size: cover;
+
+  .play-wrapper {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+
+    .play-btn {
+      width: 130px;
+      height: 24px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+      border: 1px solid $bg;
+      line-height: 24px;
+      font-size: 14px;
+      color: $bg;
+      text-align: center;
+    }
+  }
 }
 
 .list {
