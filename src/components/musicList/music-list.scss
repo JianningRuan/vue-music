@@ -42,9 +42,10 @@
 }
 
 .list {
-  position: absolute;
-  top: 0;
-  left: 0;
+  background: #fff;
+  //position: absolute;
+  //top: 0;
+  //left: 0;
 }
 
 .bg-layer {
@@ -53,4 +54,14 @@
   background: #fff;
 }
 
+.scroll-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto !important;
+  overflow: inherit !important;
+}
 

@@ -10,7 +10,7 @@
       <div class="filer"></div>
     </div>
     <div class="bg-layer" ref="bgLayer"></div>
-    <scroll ref="scroll" :probeType="probeType" :listenScroll="listenScroll" :data="songList" @scroll="toScroll">
+    <scroll class="scroll-wrapper" ref="scroll" :probeType="probeType" :listenScroll="listenScroll" :data="songList" @scroll="toScroll">
       <song-list class="list" ref="list" :songList="songList" @select="selectItem"></song-list>
     </scroll>
   </div>
@@ -47,20 +47,30 @@
         this.$refs.scroll.refresh();
       },
       scrollY(newY){
-        //console.log(newY)
-        let translateY = Math.max(-this.bgImageTop + headHeight, newY)
-        console.log(translateY)
-        let bgImage = this.$refs.bgImage
+        console.log(newY)
+        let translateY = Math.max(-this.bgImageTop + headHeight, newY);
+        let scale = 1;
+        const percent = Math.abs(newY / this.bgImageTop);
+        console.log(translateY, scale);
+        let bgImage = this.$refs.bgImage;
         if (newY < translateY){
           bgImage.style.zIndex = 6;
-          bgImage.style.paddingTop = 0;
-          bgImage.style.height = `${headHeight}px`
+          bgImage.style.paddingTop = `${headHeight}px`;
+          //bgImage.style.height = `${headHeight}px`
         }else {
           bgImage.style.zIndex = 0;
           bgImage.style.paddingTop = '70%';
+          //bgImage.style.height = 0
+        }
+        if (newY > 0){
+          bgImage.style.height = `${newY}px`;
+          scale = 1 + percent
+        }else {
           bgImage.style.height = 0
         }
-        this.$refs.bgLayer.style.transform = `translate3d(0,${translateY}px,0)`
+        bgImage.style.transform = `scale(${scale})`;
+        this.$refs.bgLayer.style.transform = `translate3d(0,${translateY}px,0)`;
+        //this.$refs.list.$el.style.top = `${translateY}px`
       }
     },
     data(){
@@ -83,7 +93,8 @@
       },
       setTop(){
         this.bgImageTop = this.$refs.bgImage.clientHeight;
-        this.$refs.list.$el.style.top = `${this.bgImageTop}px`
+        //this.$refs.list.$el.style.top = `${this.bgImageTop}px`
+        this.$refs.scroll.$el.style.top = `${this.bgImageTop}px`
       },
       selectItem(song, index){
         console.log(song)
