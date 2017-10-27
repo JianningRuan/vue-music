@@ -6,16 +6,19 @@
         <img width="100%" height="100%" :src="currentSong.image"/>
       </div>
       <div class="top">
-        <div class="back" @click="closePlayer">&lt;</div>
+        <div class="back" @click="closePlayer"><i class="iconfont icon-down"></i></div>
         <h1></h1>
+        <p></p>
       </div>
       <div class="middle">
 
       </div>
       <div class="bottom">
         <div class="slider-nav"></div>
-        <div class="progress-wrapper"></div>
-        <div class="opa-nav"></div>
+        <div class="progress-wrapper"></div><!--进度条-->
+        <div class="opa-nav">
+          <a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a>
+        </div><!--操作按钮-->
       </div>
     </div>
     <!--全屏播放器-end-->
