@@ -1,6 +1,21 @@
 @import "./../../assets/style/variable";
 
-.m-head {
+.play-bg {
+  background: rgba(255, 255, 255, 0.5);
+
+  .play-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    filter: blur(20px);
+  }
+}
+
+
+.top {
   width: 100%;
   height: 56px;
   position: relative;

@@ -34,11 +34,12 @@ export class singer {
 
 //创建歌曲资料
 export class song {
-  constructor({index, isNew, albumMid, albumName, songMid, songName, singer,interval, image, url}){
+  constructor({index, isNew, albumMid, albumName, songId, songMid, songName, singer,interval, image, url}){
     this.index = index;
     this.isNew = isNew;
     this.albumMid = albumMid;
     this.albumName = albumName;
+    this.songId = songId;
     this.songMid = songMid;
     this.songName = songName;
     this.singer = singer;
@@ -61,12 +62,13 @@ export function crateSongList(songDate){
       isNew: val.isnew,
       albumMid: val.musicData.albummid,
       albumName: val.musicData.albumname,
+      songId: val.musicData.songid,
       songMid: val.musicData.songmid,
       songName: val.musicData.songname,
       singer: singer.join(' '),
       interval: val.musicData.interval,
-      image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.musicData.songmid}.jpg?max_age=2592000`,
-      url: 'http://dl.stream.qqmusic.qq.com/C400003OUlho2HcRHC.m4a?vkey=11AA750B533B961727C635F483370296CC8F93E372380569A10B5AE1421F142CC83F5FA9AD84E6FEC7A93ACBE8E652008528CCFF0B22645F&guid=4467252985&uin=0&fromtag=66'
+      image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.musicData.albummid}.jpg?max_age=2592000`,
+      url: `http://ws.stream.qqmusic.qq.com/${val.musicData.songid}.m4a?fromtag=46`
     }))
   })
   return songList
@@ -84,14 +86,14 @@ export function createDiscSongList(songDate){
       isNew: val.isnew,
       albumMid: val.albummid,
       albumName: val.albumname,
+      songId: val.songid,
       songMid: val.songmid,
       songName: val.songname,
       singer: singer.join(' '),
       interval: val.interval,
-      image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.songmid}.jpg?max_age=2592000`,
-      url: 'http://dl.stream.qqmusic.qq.com/C400003OUlho2HcRHC.m4a?vkey=11AA750B533B961727C635F483370296CC8F93E372380569A10B5AE1421F142CC83F5FA9AD84E6FEC7A93ACBE8E652008528CCFF0B22645F&guid=4467252985&uin=0&fromtag=66'
+      image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.albummid}.jpg?max_age=2592000`,  //https://y.gtimg.cn/music/photo_new/T002R300x300M000001ZaCQY2OxVMg.jpg?max_age=2592000
+      url: `http://ws.stream.qqmusic.qq.com/${val.songId}.m4a?fromtag=46`
     }))
   })
-
   return songList
 }

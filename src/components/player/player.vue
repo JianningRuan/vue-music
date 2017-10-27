@@ -1,16 +1,28 @@
 <template>
   <div class="player" v-show="playList.length">
     <!--全屏播放器-->
-    <div class="pos-wrapper full-page-player" v-show="fullPage">
-      <div class="m-head">
+    <div class="pos-wrapper full-page-player play-bg" v-show="fullPage">
+      <div class="play-bg-layer">
+        <img width="100%" height="100%" :src="currentSong.image"/>
+      </div>
+      <div class="top">
         <div class="back" @click="closePlayer">&lt;</div>
         <h1></h1>
+      </div>
+      <div class="middle">
+
+      </div>
+      <div class="bottom">
+        <div class="slider-nav"></div>
+        <div class="progress-wrapper"></div>
+        <div class="opa-nav"></div>
       </div>
     </div>
     <!--全屏播放器-end-->
     <!--迷你播放器-->
-    <div class="pos-bottom-wrapper mini-player" v-show="!fullPage" @click="openPlayer">2</div>
+    <div class="pos-bottom-wrapper mini-player" v-show="!fullPage" @click="openPlayer"></div>
     <!--迷你播放器-end-->
+    <audio ref="audio" :src="currentSong.url"></audio>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -20,8 +32,21 @@
     computed: {
       ...mapGetters([
         'fullPage',
-        'playList'
+        'playList',
+        'currentIndex'
       ])
+    },
+    watch: {
+      currentIndex(newVal){
+        this.currentSong = this.playList[newVal]
+      },
+      currentSong(newVal){
+      }
+    },
+    data(){
+      return {
+        currentSong: {}
+      }
     },
     methods: {
       closePlayer(){
