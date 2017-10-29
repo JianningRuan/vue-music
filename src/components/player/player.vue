@@ -7,11 +7,17 @@
       </div>
       <div class="top">
         <div class="back" @click="closePlayer"><i class="iconfont icon-down"></i></div>
-        <h1></h1>
-        <p></p>
+        <h1>wdwddw</h1>
+        <h2>dqdqdq</h2>
       </div>
       <div class="middle">
-
+        <div class="middle-l">
+          <div class="cd-wrapper">
+            <div class="cd">
+              <img :src="currentSong.image"/>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="bottom">
         <div class="slider-nav"></div>
