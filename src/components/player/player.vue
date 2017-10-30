@@ -25,9 +25,9 @@
           <div class="progress-wrapper"></div><!--进度条-->
           <div class="opa-nav">
             <a class="opa-btn iconfont icon-random-play"></a>
-            <a class="opa-btn iconfont icon-prev"></a>
-            <a class="play-btn iconfont" :class="playIcon" @click="playBtn"></a>
-            <a class="opa-btn iconfont icon-next"></a>
+            <a class="opa-btn iconfont icon-prev" @click="prev"></a>
+            <a class="play-btn iconfont" :class="playIcon, readyIcon" @click="playBtn"></a>
+            <a class="opa-btn iconfont icon-next" @click="next"></a>
             <a class="opa-btn iconfont icon-collection"></a>
           </div><!--操作按钮-->
         </div>
@@ -51,7 +51,7 @@
       </div>
     </transition>
     <!--迷你播放器-end-->
-    <audio ref="audio" :src="currentSong.url"></audio>
+    <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error"></audio>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -64,6 +64,9 @@
       },
       cdClass(){
         return this.playing ? 'play' : 'play pause'
+      },
+      readyIcon(){
+        return this.loadReady ? '' : 'disable'
       },
       ...mapGetters([
         'fullPage',
@@ -84,15 +87,14 @@
         })
       },
       playing(newPlaying){
-        if (newPlaying){
-          this.play();
-        }else {
-          this.pause();
-        }
+        this.$nextTick(()=>{
+          newPlaying ? this.play() : this.pause();
+        })
       }
     },
     data(){
       return {
+        loadReady: false,
         currentSong: {}
       }
     },
@@ -112,9 +114,42 @@
       playBtn(){
         this.setPlaying(!this.playing)
       },
+      //上一首
+      prev(){
+        if (!this.loadReady){
+          return
+        }
+        let index = this.currentIndex - 1;
+        if (index == -1){
+          index = this.playList.length - 1;
+        }
+        this.setCurrentIndex(index)
+        this.loadReady = false
+      },
+      //下一首
+      next(){
+        if (!this.loadReady){
+          return
+        }
+        let index = this.currentIndex + 1;
+        if (index === this.playList.length){
+          index = 0;
+        }
+        this.setCurrentIndex(index)
+        this.loadReady = false
+      },
+      //歌曲加载完成
+      ready(){
+        this.loadReady = true
+      },
+      //加载出错时
+      error(){
+        this.loadReady = true
+      },
       ...mapMutations({
         setFullPage: 'SET_FULL_PAGE',
-        setPlaying: 'SET_PLAYING'
+        setPlaying: 'SET_PLAYING',
+        setCurrentIndex: 'SET_CURRENT_INDEX'
       })
     }
   }
