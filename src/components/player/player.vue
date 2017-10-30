@@ -63,7 +63,7 @@
         return this.playing ? 'icon-pause' : 'icon-play'
       },
       cdClass(){
-        return this.playing ? 'play' : 'pause'
+        return this.playing ? 'play' : 'play pause'
       },
       ...mapGetters([
         'fullPage',
