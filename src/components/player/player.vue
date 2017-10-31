@@ -22,12 +22,18 @@
         </div>
         <div class="bottom">
           <div class="slider-nav"></div>
-          <div class="progress-wrapper"></div><!--进度条-->
+          <div class="progress-wrapper">
+            <div class="progress-bar-wrapper">
+              <div class="p-time time-l">{{format(currentTime)}}</div>
+              <progress-bar :percent="percent"></progress-bar>
+              <div class="p-time time-r">{{format(currentSong.interval)}}</div>
+            </div>
+          </div><!--进度条-->
           <div class="opa-nav">
             <a class="opa-btn iconfont icon-random-play"></a>
-            <a class="opa-btn iconfont icon-prev" @click="prev"></a>
+            <a class="opa-btn iconfont icon-prev" :class="readyIcon" @click="prev"></a>
             <a class="play-btn iconfont" :class="playIcon, readyIcon" @click="playBtn"></a>
-            <a class="opa-btn iconfont icon-next" @click="next"></a>
+            <a class="opa-btn iconfont icon-next" :class="readyIcon" @click="next"></a>
             <a class="opa-btn iconfont icon-collection"></a>
           </div><!--操作按钮-->
         </div>
@@ -51,13 +57,17 @@
       </div>
     </transition>
     <!--迷你播放器-end-->
-    <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error"></audio>
+    <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error" @timeupdate="updateTime"></audio>
   </div>
 </template>
 <script type="text/ecmascript-6">
   import './player.scss'
+  import progressBar from './../../unit/progressBar/progress-bar';
   import { mapGetters, mapMutations } from 'vuex'
   export default {
+    components: {
+      progressBar
+    },
     computed: {
       playIcon(){
         return this.playing ? 'icon-pause' : 'icon-play'
@@ -67,6 +77,10 @@
       },
       readyIcon(){
         return this.loadReady ? '' : 'disable'
+      },
+      //返回进度百分比
+      percent(){
+        return this.currentTime / this.currentSong.interval
       },
       ...mapGetters([
         'fullPage',
@@ -95,7 +109,8 @@
     data(){
       return {
         loadReady: false,
-        currentSong: {}
+        currentSong: {},
+        currentTime: 0
       }
     },
     methods: {
@@ -145,6 +160,27 @@
       //加载出错时
       error(){
         this.loadReady = true
+      },
+      //监听歌曲时间变化
+      updateTime(e){
+        console.log(e)
+        this.currentTime = e.target.currentTime;
+      },
+      //分秒格式化
+      format(thisTime){
+        console.log(thisTime)
+        thisTime = thisTime | 0;
+        let min = thisTime / 60 | 0;
+        let s = this._pad(thisTime % 60);
+        return `${min}:${s}`
+      },
+      _pad(num, n = 2){
+        let len = num.toString().length;
+        while (len < n){
+          num = '0' + num;
+          len++;
+        }
+        return num
       },
       ...mapMutations({
         setFullPage: 'SET_FULL_PAGE',
