@@ -53,7 +53,7 @@
           <p v-html="currentSong.singer"></p>
         </div>
         <div class="mini-opa-btn iconfont" :class="playIcon" @click.stop.prevent="playBtn">
-
+          <progress-circle></progress-circle>
         </div>
         <div class="mini-opa-btn"></div>
       </div>
@@ -65,10 +65,12 @@
 <script type="text/ecmascript-6">
   import './player.scss'
   import progressBar from './../../unit/progressBar/progress-bar';
+  import progressCircle from './../../unit/progressCircle/progress-circle'
   import { mapGetters, mapMutations } from 'vuex'
   export default {
     components: {
-      progressBar
+      progressBar,
+      progressCircle
     },
     computed: {
       playIcon(){
