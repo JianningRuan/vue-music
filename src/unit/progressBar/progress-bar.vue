@@ -55,7 +55,9 @@
         this.sendPercent();
       },
       sendPercent(){
-
+        const  progressBarWidth = this.$refs.progressBar.clientWidth;
+        const percent = this.$refs.progress.clientWidth / progressBarWidth;
+        this.$emit('percentChange', percent)
       },
       //输出进度条位置
       _offset(pWidth){

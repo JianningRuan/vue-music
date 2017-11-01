@@ -25,7 +25,7 @@
           <div class="progress-wrapper">
             <div class="progress-bar-wrapper">
               <div class="p-time time-l">{{format(currentTime)}}</div>
-              <progress-bar :percent="percent"></progress-bar>
+              <progress-bar :percent="percent" @percentChange="percentChange"></progress-bar>
               <div class="p-time time-r">{{format(currentSong.interval)}}</div>
             </div>
           </div><!--进度条-->
@@ -52,7 +52,9 @@
           <h3 v-html="currentSong.songName"></h3>
           <p v-html="currentSong.singer"></p>
         </div>
-        <div class="mini-opa-btn iconfont" :class="playIcon" @click.stop.prevent="playBtn"></div>
+        <div class="mini-opa-btn iconfont" :class="playIcon" @click.stop.prevent="playBtn">
+
+        </div>
         <div class="mini-opa-btn"></div>
       </div>
     </transition>
@@ -181,6 +183,16 @@
           len++;
         }
         return num
+      },
+      //监听进度条组件穿回来的状态
+      percentChange(percent){
+        console.log(percent)
+        let currentTime = this.currentSong.interval * percent;
+        this.$refs.audio.currentTime = currentTime;
+        if (!this.playing){
+          this.play();
+        }
+
       },
       ...mapMutations({
         setFullPage: 'SET_FULL_PAGE',
