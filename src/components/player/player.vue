@@ -113,7 +113,7 @@
         //this.currentSong = this.playList[newVal]
       },
       currentSong(newVal, oldVal){
-        if (newVal.id === oldVal.id){
+        if (newVal.songId === oldVal.songId){
           return
         }
         //播放
