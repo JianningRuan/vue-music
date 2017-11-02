@@ -68,6 +68,7 @@
   import progressCircle from './../../unit/progressCircle/progress-circle'
   import { mapGetters, mapMutations } from 'vuex'
   import { randomArray } from './../../assets/js/common';
+  import { playMode } from './../../assets/js/config'
   export default {
     components: {
       progressBar,
@@ -178,7 +179,15 @@
       },
       //监听播放完执行
       end(){
-        this.next();
+        if (this.mode === playMode.loop){
+          this.loop();
+        }else {
+          this.next();
+        }
+      },
+      loop(){
+        this.$refs.audio.currentTime = 0;
+        this.play()
       },
       //歌曲加载完成
       ready(){
@@ -220,16 +229,12 @@
         const mode = (this.mode + 1)%3;
         this.setMode(mode);
 
-        console.log(this.sequenceList)
         let list = null;
-        if (this.mode === 0){
-
-        }else if (this.mode === 1){
-          list = this.sequenceList
-        }else {
+        if (this.mode === playMode.random){
           list = randomArray(this.sequenceList)
+        }else {
+          list = this.sequenceList
         }
-        console.log(list)
         this.reactCurrentIndex(list);
         this.setPlayList(list);
       },
