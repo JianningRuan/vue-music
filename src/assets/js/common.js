@@ -97,3 +97,19 @@ export function createDiscSongList(songDate){
   })
   return songList
 }
+
+//制造随机
+function getRandomInit(min, max){
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+//随机队列
+export function randomArray(arr){
+  let _arr = arr.slice();
+  for (let i = 0; i < _arr.length; i++) {
+    let j = getRandomInit(0, i);
+    let t = _arr[i];
+    _arr[i] = _arr[j];
+    _arr[j] = t
+  }
+  return _arr
+}

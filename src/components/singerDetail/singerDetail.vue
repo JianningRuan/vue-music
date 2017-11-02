@@ -35,13 +35,12 @@
     },
     mounted(){
       if (!this.singer.id){
-        this.$router.push('/singer')
+        this.$router.push('/singer');
         return
       }
       this.$nextTick(() => {
         //this.singer = this.$store.state.singer
-        this.title = this.singer.name
-        console.log(this.singer)
+        this.title = this.singer.name;
 
         getSingerRecommend(this.singer.mid).then((res)=>{
           console.log(res)

@@ -30,7 +30,7 @@
             </div>
           </div><!--进度条-->
           <div class="opa-nav">
-            <a class="opa-btn iconfont icon-random-play"></a>
+            <a class="opa-btn iconfont icon-random-play" :class="iconMode" @click="changeMode"></a>
             <a class="opa-btn iconfont icon-prev" :class="readyIcon" @click="prev"></a>
             <a class="play-btn iconfont" :class="playIcon, readyIcon" @click="playBtn"></a>
             <a class="opa-btn iconfont icon-next" :class="readyIcon" @click="next"></a>
@@ -52,14 +52,14 @@
           <h3 v-html="currentSong.songName"></h3>
           <p v-html="currentSong.singer"></p>
         </div>
-        <div class="mini-opa-btn iconfont" :class="playIcon" @click.stop.prevent="playBtn">
-          <progress-circle></progress-circle>
+        <div class="mini-opa iconfont" :class="playIcon" @click.stop.prevent="playBtn">
+          <progress-circle class="btn" :radius="radius" :percent="percent"></progress-circle>
         </div>
         <div class="mini-opa-btn"></div>
       </div>
     </transition>
     <!--迷你播放器-end-->
-    <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error" @timeupdate="updateTime"></audio>
+    <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error" @timeupdate="updateTime" @ended="end"></audio>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -67,6 +67,7 @@
   import progressBar from './../../unit/progressBar/progress-bar';
   import progressCircle from './../../unit/progressCircle/progress-circle'
   import { mapGetters, mapMutations } from 'vuex'
+  import { randomArray } from './../../assets/js/common';
   export default {
     components: {
       progressBar,
@@ -86,21 +87,38 @@
       percent(){
         return this.currentTime / this.currentSong.interval
       },
+      //返回播放模式
+      iconMode(){
+        let mode = this.mode;
+        if (mode === 0){
+          return 'icon-loop-play'; //顺序
+        }else if (mode === 1){
+          return 'icon-single-play'; //单曲
+        }else {
+          return 'icon-random-play'; //随机
+        }
+      },
       ...mapGetters([
         'fullPage',
         'playList',
+        'sequenceList',
         'currentIndex',
-        'playing'
+        'playing',
+        'mode',
+        'currentSong'
       ])
     },
     watch: {
       currentIndex(newVal){
-        this.currentSong = this.playList[newVal]
+        //this.currentSong = this.playList[newVal]
       },
-      currentSong(newVal){
+      currentSong(newVal, oldVal){
+        if (newVal.id === oldVal.id){
+          return
+        }
         //播放
         this.$nextTick(()=>{
-          this.setPlaying(true)
+          this.setPlaying(true);
           this.play();
         })
       },
@@ -113,8 +131,9 @@
     data(){
       return {
         loadReady: false,
-        currentSong: {},
-        currentTime: 0
+        //currentSong: {},
+        currentTime: 0,
+        radius: 32
       }
     },
     methods: {
@@ -142,7 +161,7 @@
         if (index == -1){
           index = this.playList.length - 1;
         }
-        this.setCurrentIndex(index)
+        this.setCurrentIndex(index);
         this.loadReady = false
       },
       //下一首
@@ -154,8 +173,12 @@
         if (index === this.playList.length){
           index = 0;
         }
-        this.setCurrentIndex(index)
+        this.setCurrentIndex(index);
         this.loadReady = false
+      },
+      //监听播放完执行
+      end(){
+        this.next();
       },
       //歌曲加载完成
       ready(){
@@ -167,12 +190,10 @@
       },
       //监听歌曲时间变化
       updateTime(e){
-        console.log(e)
         this.currentTime = e.target.currentTime;
       },
       //分秒格式化
       format(thisTime){
-        console.log(thisTime)
         thisTime = thisTime | 0;
         let min = thisTime / 60 | 0;
         let s = this._pad(thisTime % 60);
@@ -188,18 +209,45 @@
       },
       //监听进度条组件穿回来的状态
       percentChange(percent){
-        console.log(percent)
         let currentTime = this.currentSong.interval * percent;
         this.$refs.audio.currentTime = currentTime;
         if (!this.playing){
           this.play();
         }
+      },
+      //切换播放模式
+      changeMode(){
+        const mode = (this.mode + 1)%3;
+        this.setMode(mode);
 
+        console.log(this.sequenceList)
+        let list = null;
+        if (this.mode === 0){
+
+        }else if (this.mode === 1){
+          list = this.sequenceList
+        }else {
+          list = randomArray(this.sequenceList)
+        }
+        console.log(list)
+        this.reactCurrentIndex(list);
+        this.setPlayList(list);
+      },
+      //切换随机模式时，改变随机数列当前的播放序号
+      reactCurrentIndex(list){
+        console.log(list)
+        let index = list.findIndex((item)=>{
+          console.log(item)
+          return item.songId === this.currentSong.songId
+        });
+        this.setCurrentIndex(index)
       },
       ...mapMutations({
         setFullPage: 'SET_FULL_PAGE',
         setPlaying: 'SET_PLAYING',
-        setCurrentIndex: 'SET_CURRENT_INDEX'
+        setCurrentIndex: 'SET_CURRENT_INDEX',
+        setMode: 'SET_MODE',
+        setPlayList: 'SET_PLAY_LIST'
       })
     }
   }
