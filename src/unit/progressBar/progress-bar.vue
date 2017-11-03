@@ -46,9 +46,9 @@
         if (!this.touch.initiated){
           return
         }
-        let offsetWidth = Math.max(e.touches[0].pageX - this.touch.startX, 0);
-        let offsetLeft = offsetWidth + this.touch.left;
-        this._offset(offsetLeft)
+        let deltaX = e.touches[0].pageX - this.touch.startX;
+        let offsetWidth = Math.min(this.$refs.progressBar.clientWidth, Math.max(this.touch.left + deltaX, 0));
+        this._offset(offsetWidth)
       },
       ProgressTouchEnd(e){
         this.touch.initiated = false;
@@ -65,7 +65,11 @@
         this.$refs.progressPoint.style.left = `${pWidth}px`
       },
       touchToHere(e){
-        //console.log(e)
+        console.log(e);
+        const rect = this.$refs.progressBar.getBoundingClientRect();
+        const offsetWidth = e.pageX - rect.left;
+        this._offset(offsetWidth);
+        this.sendPercent();
       }
     }
   }

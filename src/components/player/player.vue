@@ -187,7 +187,8 @@
       },
       loop(){
         this.$refs.audio.currentTime = 0;
-        this.play()
+        this.$refs.audio.play();
+        //this.play()
       },
       //歌曲加载完成
       ready(){
@@ -222,6 +223,7 @@
         this.$refs.audio.currentTime = currentTime;
         if (!this.playing){
           this.play();
+          this.setPlaying(true)
         }
       },
       //切换播放模式
@@ -240,9 +242,7 @@
       },
       //切换随机模式时，改变随机数列当前的播放序号
       reactCurrentIndex(list){
-        console.log(list)
         let index = list.findIndex((item)=>{
-          console.log(item)
           return item.songId === this.currentSong.songId
         });
         this.setCurrentIndex(index)

@@ -130,6 +130,11 @@
       .progress-bar {
         flex: 1;
 
+        height: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
         .bar-inner {
           height: 4px;
           position: relative;

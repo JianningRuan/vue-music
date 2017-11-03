@@ -8,7 +8,7 @@
     </div>
     <div class="bg-image" ref="bgImage" :style="setBgImage">
       <div class="play-wrapper">
-        <a class="play-btn" ref="playBtn">播放全部</a>
+        <a class="play-btn" ref="playBtn" @click="playList">播放全部</a>
       </div>
       <div class="filer"></div>
     </div>
@@ -111,6 +111,10 @@
       toScroll(pos){
         //console.log(pos)
         this.scrollY = pos.y
+      },
+      //点击播放全部按钮触发
+      playList(){
+        this.selectItem('', 0);
       },
       ...mapActions([
         'playSelect'
