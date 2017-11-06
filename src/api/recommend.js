@@ -200,6 +200,7 @@ export function getLyric(mid) {
     loginUin: 0,
     hostUin: 0,
     platform: 'yqq',
+    format:'json',
     needNewCode:0
   })
   return axios(url, {

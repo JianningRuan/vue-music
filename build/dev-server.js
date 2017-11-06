@@ -163,6 +163,8 @@ apiRoutes.get('/getLyric', function (req, res) {
     console.log(e)
   })
 })
+//获取歌词h5
+apiRoutes.get()
 //获取歌单分类目录
 apiRoutes.get('/getDiscMuse', function(req, res){
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg';
