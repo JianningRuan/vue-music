@@ -74,9 +74,9 @@ export function crateSongList(songDate){
   return songList
 }
 
-export function createDiscSongList(songDate){
+export function createDiscSongList(songData){
   let songList = [];
-  songDate.forEach((val, index)=>{
+  songData.forEach((val, index)=>{
     let singer = [];
     val.singer.forEach((val)=>{
       singer.push(val.name)
@@ -93,6 +93,30 @@ export function createDiscSongList(songDate){
       interval: val.interval,
       image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.albummid}.jpg?max_age=2592000`,  //https://y.gtimg.cn/music/photo_new/T002R300x300M000001ZaCQY2OxVMg.jpg?max_age=2592000
       url: `http://ws.stream.qqmusic.qq.com/${val.songId}.m4a?fromtag=46`
+    }))
+  })
+  return songList
+}
+
+export function createRankSongList(songData){
+  let songList = [];
+  songData.forEach((val, index)=>{
+    let singer = [];
+    val.data.singer.forEach((val)=>{
+      singer.push(val.name)
+    })
+    songList.push(new song({
+      index: index,
+      isNew: 0,
+      albumMid: val.data.albummid,
+      albumName: val.data.albumname,
+      songId: val.data.songid,
+      songMid: val.data.songmid,
+      songName: val.data.songname,
+      singer: singer.join(' '),
+      interval: val.data.interval,
+      image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.data.albummid}.jpg?max_age=2592000`,  //https://y.gtimg.cn/music/photo_new/T002R300x300M000001ZaCQY2OxVMg.jpg?max_age=2592000
+      url: `http://ws.stream.qqmusic.qq.com/${val.data.songid}.m4a?fromtag=46`
     }))
   })
   return songList

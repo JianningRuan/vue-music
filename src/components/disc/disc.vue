@@ -1,5 +1,5 @@
 <template>
-  <music-list :songList="songList"></music-list>
+  <music-list :songList="songList" :bgImage="disc.picUrl" :title="disc.songListDesc"></music-list>
 </template>
 <script type="text/ecmascript-6">
   import './disc.scss'
@@ -17,7 +17,8 @@
       return {
         disstId: '',
         cdList: '',
-        songList: []
+        songList: [],
+        bgImage: ''
       }
     },
     components: {

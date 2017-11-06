@@ -189,3 +189,8 @@ export function getRankingDetail(topId){
   })
 }
 
+//歌单分类目录
+export function getDiscMuse(){
+
+}
+
