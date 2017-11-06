@@ -121,6 +121,7 @@
         this.$nextTick(()=>{
           this.setPlaying(true);
           this.play();
+          this.currentSong.getSongLyric();
         })
       },
       playing(newPlaying){

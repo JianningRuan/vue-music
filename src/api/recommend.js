@@ -189,6 +189,26 @@ export function getRankingDetail(topId){
   })
 }
 
+//歌词
+export function getLyric(mid) {
+  const url = '/api/getLyric';
+  const data = Object.assign({}, commonParam, {
+    callback:'MusicJsonCallback_lrc',
+    pcachetime:1509719154279,
+    songmid: mid,
+    jsonCallback: 'MusicJsonCallback_lrc',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode:0
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
+
 //歌单分类目录
 export function getDiscMuse(){
 

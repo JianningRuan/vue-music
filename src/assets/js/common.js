@@ -1,3 +1,5 @@
+import { getLyric } from './../../api/recommend';
+
 //添加class名
 export function addClass(el, className) {
   let isHasClass = hasClass(el, className);
@@ -46,6 +48,11 @@ export class song {
     this.interval = interval;
     this.image = image;
     this.url = url
+  }
+  getSongLyric(){
+    getLyric(this.songMid).then((res)=>{
+      console.log(res)
+    })
   }
 }
 
