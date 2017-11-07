@@ -1,4 +1,5 @@
-import { getLyric } from './../../api/recommend';
+import { getLyric, getLyricH5 } from './../../api/recommend';
+import { Base64 } from 'js-base64'
 
 //添加class名
 export function addClass(el, className) {
@@ -49,9 +50,20 @@ export class song {
     this.image = image;
     this.url = url
   }
-  getSongLyric(){
-    getLyric(this.songMid).then((res)=>{
-      console.log(res)
+
+  getSongLyricH5(){
+    if (this.lyric){
+      return Promise.resolve(this.lyric)
+    }
+    return new Promise((resolve, reject)=>{
+      getLyricH5(this.songId).then((res)=>{
+        if (res.code === 0){
+          this.lyric = Base64.decode(res.lyric);
+          resolve(this.lyric)
+        }else {
+          reject('no lyric')
+        }
+      })
     })
   }
 }

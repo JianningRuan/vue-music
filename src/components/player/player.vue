@@ -19,6 +19,13 @@
               </div>
             </div>
           </div>
+          <div class="middle-r">
+            <div class="lyric-wrapper">
+              <div class="lyric-box">
+                <p></p>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="bottom">
           <div class="slider-nav"></div>
@@ -66,9 +73,12 @@
   import './player.scss'
   import progressBar from './../../unit/progressBar/progress-bar';
   import progressCircle from './../../unit/progressCircle/progress-circle'
+  import BScroll from './../../unit/scroll/scroll'
   import { mapGetters, mapMutations } from 'vuex'
   import { randomArray } from './../../assets/js/common';
   import { playMode } from './../../assets/js/config'
+  //import Base64 from 'js-base64'
+  import Lyric from 'lyric-parser'
   export default {
     components: {
       progressBar,
@@ -121,8 +131,12 @@
         this.$nextTick(()=>{
           this.setPlaying(true);
           this.play();
-          this.currentSong.getSongLyric();
+          //获取歌词
+          this.getLyric();
         })
+      },
+      currentLyric(newVal){
+        console.log(newVal)
       },
       playing(newPlaying){
         this.$nextTick(()=>{
@@ -135,7 +149,8 @@
         loadReady: false,
         //currentSong: {},
         currentTime: 0,
-        radius: 32
+        radius: 32,
+        currentLyric: null
       }
     },
     methods: {
@@ -247,6 +262,13 @@
           return item.songId === this.currentSong.songId
         });
         this.setCurrentIndex(index)
+      },
+      //获取歌词
+      getLyric(){
+        this.currentSong.getSongLyricH5().then((lyric)=>{
+          this.currentLyric = new Lyric(lyric);
+          console.log(this.currentLyric)
+        })
       },
       ...mapMutations({
         setFullPage: 'SET_FULL_PAGE',

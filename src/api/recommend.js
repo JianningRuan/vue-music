@@ -193,15 +193,35 @@ export function getRankingDetail(topId){
 export function getLyric(mid) {
   const url = '/api/getLyric';
   const data = Object.assign({}, commonParam, {
-    callback:'MusicJsonCallback_lrc',
-    pcachetime:1509719154279,
+    //callback:'MusicJsonCallback_lrc',
+    pcachetime: +new Date(),
     songmid: mid,
-    jsonCallback: 'MusicJsonCallback_lrc',
+    //jsonCallback: 'MusicJsonCallback_lrc',
     loginUin: 0,
     hostUin: 0,
     platform: 'yqq',
     format:'json',
     needNewCode:0
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
+
+//歌词h5
+export function getLyricH5(id){
+  const url = '/api/getLyricH5';
+  const data = Object.assign({}, commonParam, {
+    uin: 0,
+    platform: 'h5',
+    needNewCode: 1,
+    nobase64: 0,
+    musicid: id,
+    songtype: 0,
+    _: 1510018061737,
+    jsonpCallback: 'json'
   })
   return axios(url, {
     params: data

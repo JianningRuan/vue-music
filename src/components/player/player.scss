@@ -96,6 +96,30 @@
       }
     }
   }
+
+  .middle-r {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    .lyric-wrapper {
+      width: 80%;
+      margin: 0 auto;
+      overflow: hidden;
+
+      .lyric-box {
+
+        p {
+          text-align: center;
+          line-height: 18px;
+          font-size: 14px;
+          color: $titColor;
+          padding: 8px 0;
+        }
+      }
+
+    }
+  }
 }
 
 .bottom {
