@@ -1,5 +1,5 @@
 <template>
-  <div class="pos-wrapper music-list">
+  <div class="pos-wrapper music-list" ref="posWrapper">
     <div class="m-head">
       <a class="back" @click="back">
         <i class="iconfont icon-left"></i>
@@ -23,10 +23,12 @@
   import scroll from './../../unit/scroll/scroll'
   import songList from './../../unit/songList/song-list'
   import { mapActions } from 'vuex'
+  import { playListMixin } from './../../assets/js/mixin'
 
   const headHeight = 50;
 
   export default {
+    mixins: [playListMixin],
     props: {
       title: {
         type: String,
@@ -50,11 +52,11 @@
         this.$refs.scroll.refresh();
       },
       scrollY(newY){
-        console.log(newY)
+        //console.log(newY)
         let translateY = Math.max(-this.bgImageTop + headHeight, newY);
         let scale = 1;
         const percent = Math.abs(newY / this.bgImageTop);
-        console.log(translateY, scale);
+        //console.log(translateY, scale);
         let bgImage = this.$refs.bgImage;
         if (newY < translateY){
           bgImage.style.zIndex = 6;
@@ -115,6 +117,14 @@
       //点击播放全部按钮触发
       playList(){
         this.selectItem('', 0);
+      },
+      //mixin重用方法
+      handlePlaylist(playlist){
+        let bottom = playlist.length > 0 ? '60px' : 0;
+        this.$nextTick(()=>{
+          this.$refs.posWrapper.style.bottom = bottom;
+          this.$refs.scroll.refresh();
+        })
       },
       ...mapActions([
         'playSelect'
