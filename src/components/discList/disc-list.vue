@@ -58,7 +58,6 @@
         })
       },
       selectItem(discId){
-        console.log(this)
         this.setDiscId(discId)
         this.$router.push({
           path: `/disc/${discId}`

@@ -19,6 +19,7 @@
 <script type="text/ecmascript-6">
   import './classify-disc.scss'
   import CHeader from './../c-head/c-head'
+  import scroll from './../../unit/scroll/scroll'
   import { getDiscMuse } from './../../api/recommend'
 
   export default {
