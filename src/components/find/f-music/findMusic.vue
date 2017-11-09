@@ -1,5 +1,5 @@
 <template>
-  <div class="find-box">
+  <div class="find-box" ref="findBox">
     <scroll ref="scrollWrapper" :listenScroll="true" :pullUp="true" v-on:scroll="listenScroll" v-on:scrollToEnd="toEnd">
       <div ref="content">
         <div class="banner" ref="f-banner" v-if="sliderArray.length">
@@ -20,7 +20,7 @@
             <i class="icon iconfont icon-ranking"></i>
             <i>排行</i>
           </router-link>
-          <router-link to="/classify-disc">
+          <router-link to="/classifyDisc">
             <i class="icon iconfont icon-type"></i>
             <i>分类歌单</i>
           </router-link>
@@ -58,8 +58,10 @@
   import slider from './../../../unit/slider/slider' //轮播图插件
   import scroll from './../../../unit/scroll/scroll' //滚动插件
   import loading from './../../../unit/loading/loading' //loading插件
+  import { playListMixin } from './../../../assets/js/mixin'
   export default {
     name: 'findMusic',
+    mixins: [playListMixin],
     data(){
       return {
         sliderArray: [], //轮播图数组
@@ -101,8 +103,8 @@
         this.$refs.scrollWrapper.refresh();
       },
       selectItem(disc){
-        console.log(disc);
-        this.setDisc(disc)
+        console.log(this);
+        this.setDiscId(disc.id)
         this.$router.push({
           path: `/disc/${disc.id}`
         })
@@ -110,15 +112,20 @@
       },
       //监听滚动
       listenScroll(data){
-        console.log(data);
-        let aa = this.$refs.content.clientHeight;
-        console.log(aa);
+        //console.log(data);
+        //let aa = this.$refs.content.clientHeight;
       },
       toEnd(){
-        console.log('到底了');
+        //console.log('到底了');
+      },
+      handlePlaylist(playlist){
+        console.log(playlist);
+        let bottom = playlist.length > 0 ? '60px' : 0;
+        this.$refs.findBox.style.paddingBottom = bottom;
+        this.$refs.scrollWrapper.refresh();
       },
       ...mapMutations({
-        setDisc: 'SET_DISC'
+        setDiscId: 'SET_DISC_ID'
       })
     }
   }

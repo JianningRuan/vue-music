@@ -1,22 +1,18 @@
 <template>
   <transition name="slide">
     <div class="pos-wrapper flex-column">
-      <c-header></c-header>
+      <c-header :title="title"></c-header>
       <div class="main relative">
-        <div class="disc-muse-box">
-          <div class="disc-muse-tit">1111</div>
+        <div class="disc-muse-box" v-for="tag in discTag">
+          <div class="disc-muse-tit">{{tag.categoryGroupName}}</div>
           <div class="disc-muse-list">
             <ul>
-              <li>22</li>
-              <li>313</li>
-              <li>12</li>
-              <li>33</li>
-              <li>112</li>
-              <li>321</li>
+              <li v-for="tagChild in tag.items" v-html="tagChild.categoryName" @click="selectItem(tagChild.categoryId)"></li>
             </ul>
           </div>
         </div>
       </div>
+      <router-view></router-view>
     </div>
   </transition>
 </template>
@@ -27,16 +23,36 @@
 
   export default {
     data(){
-      return {}
+      return {
+        title: '分类歌单',
+        discTag: []
+      }
     },
-    components: {},
-    created(){},
+    components: {
+      CHeader
+    },
+    created(){
+      this.$nextTick(()=>{
+        getDiscMuse().then((res)=>{
+          console.log(res);
+          if (res.code === 0){
+            this.discTag = res.data.categories;
+          }
+        })
+      })
+    },
     mounted(){},
     activated(){},
     watch: {},
     computed:{},
     filters: {},
-    methods: {}
+    methods: {
+      selectItem(id){
+        this.$router.push({
+          path: `/classifyDisc/${id}`
+        })
+      }
+    }
   }
 </script>
 <!--

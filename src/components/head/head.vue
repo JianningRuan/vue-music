@@ -5,6 +5,7 @@
       <router-link to="/find">发现</router-link>
       <router-link to="/trends">动态</router-link>
     </div>
+    <a></a>
   </div>
 </template>
 

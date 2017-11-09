@@ -11,7 +11,7 @@ let state = {
   sequenceList: [], //
   mode: playMode.sequence, //播放模式
   currentIndex: -1, //当前播放的歌曲序号
-  disc: {} //歌单信息
+  discId: 0 //歌单信息
 }
 
 export default state

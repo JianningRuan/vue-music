@@ -8,7 +8,7 @@
     </div>
     <div class="bg-image" ref="bgImage" :style="setBgImage">
       <div class="play-wrapper">
-        <a class="play-btn" ref="playBtn" @click="playList">播放全部</a>
+        <a class="play-btn" ref="playBtn" @click="toPlayList">播放全部</a>
       </div>
       <div class="filer"></div>
     </div>
@@ -115,11 +115,13 @@
         this.scrollY = pos.y
       },
       //点击播放全部按钮触发
-      playList(){
+      toPlayList(){
         this.selectItem('', 0);
       },
       //mixin重用方法
       handlePlaylist(playlist){
+        console.log('whtaldwdwdwqcwfwfw')
+        console.log(playlist)
         let bottom = playlist.length > 0 ? '60px' : 0;
         this.$nextTick(()=>{
           this.$refs.posWrapper.style.bottom = bottom;

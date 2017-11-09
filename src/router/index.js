@@ -12,6 +12,7 @@ import SingerDetail from './../components/singerDetail/singerDetail'
 import Ranking from '@/components/ranking/ranking'
 import RankingDetail from './../components/rankingDetail/ranking-detail'
 import ClassifyDisc from '@/components/classifyDisc/classify-disc'
+import discList from './../components/discList/disc-list'
 
 import Player from './../components/player/player'
 
@@ -83,7 +84,13 @@ export default new Router({
     {
       path: '/classifyDisc',
       name: 'ClassifyDisc',
-      component: ClassifyDisc
+      component: ClassifyDisc,
+      children: [
+        {
+          path: ':id',
+          component: discList
+        }
+      ]
     },
     {
       path: '/player',

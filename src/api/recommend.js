@@ -232,6 +232,41 @@ export function getLyricH5(id){
 
 //歌单分类目录
 export function getDiscMuse(){
+  const url = '/api/getDiscMuse';
+  const data = Object.assign({}, commonParam, {
+    jsonCallback: 'getPlaylistTags',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode:0
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
 
+//分类的歌单列表
+export function getDiscList(categoryId){
+  const url = '/api/getDiscList';
+  const data = Object.assign({}, commonParam, {
+    picmid: 1,
+    rnd: Math.random(),
+    jsonCallback: 'getPlaylist',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode: 0,
+    categoryId: 11,
+    sortId: categoryId,
+    sin: 0,
+    ein: 29
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
 }
 
