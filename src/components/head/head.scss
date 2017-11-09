@@ -4,6 +4,7 @@
   height: $headHeight;
   width: 100%;
   background: $bg;
+  position: relative;
 
   .nav {
     height: $headHeight;
@@ -17,5 +18,31 @@
       color: #fff;
       margin: 0 10px;
     }
+  }
+
+  .search-btn {
+    width: $headHeight;
+    height: $headHeight;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: $headHeight;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+  }
+
+  .menu {
+    width: $headHeight;
+    height: $headHeight;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: $headHeight;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
   }
 }
