@@ -120,7 +120,6 @@
       },
       //mixin重用方法
       handlePlaylist(playlist){
-        console.log('whtaldwdwdwqcwfwfw')
         console.log(playlist)
         let bottom = playlist.length > 0 ? '60px' : 0;
         this.$nextTick(()=>{

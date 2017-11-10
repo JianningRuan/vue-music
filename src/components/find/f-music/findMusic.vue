@@ -122,7 +122,9 @@
         console.log(playlist);
         let bottom = playlist.length > 0 ? '60px' : 0;
         this.$refs.findBox.style.paddingBottom = bottom;
-        this.$refs.scrollWrapper.refresh();
+        if (playlist.length > 0){
+          this.$refs.scrollWrapper.refresh();
+        }
       },
       ...mapMutations({
         setDiscId: 'SET_DISC_ID'

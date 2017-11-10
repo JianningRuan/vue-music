@@ -80,6 +80,23 @@ export function getRadioList(){
     return Promise.resolve(res.data)
   })
 }
+//电台歌单
+export function getRadio(albummid){
+  const url = '/api/getRadio';
+  const data = Object.assign({}, commonParam, {
+    albummid: albummid,
+    jsonCallback: 'albuminfoCallback',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode:0
+  })
+  return axios(url, {
+    params: data
+  }).then((res)=>{
+    return Promise.resolve(res.data)
+  })
+}
 
 //歌手 jsonp
 export function getSinger() {
@@ -248,7 +265,7 @@ export function getDiscMuse(){
 }
 
 //分类的歌单列表
-export function getDiscList(categoryId){
+export function getDiscList(categoryId, num = 29){
   const url = '/api/getDiscList';
   const data = Object.assign({}, commonParam, {
     picmid: 1,
@@ -261,7 +278,7 @@ export function getDiscList(categoryId){
     categoryId: 11,
     sortId: categoryId,
     sin: 0,
-    ein: 29
+    ein: num
   })
   return axios(url, {
     params: data

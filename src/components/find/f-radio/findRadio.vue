@@ -2,7 +2,7 @@
   <div class="find-box">
     <scroll ref="scroll" :data="radioList">
       <div class="radio-wrapper">
-        <div class="radio" v-for="radio in radioList">
+        <div class="radio" v-for="radio in radioList" @click="selectItem(radio)">
           <div class="radio-images">
             <img @load="loadImage" v-lazy="radio.radioImg"/>
           </div>
@@ -45,6 +45,10 @@
       },
       loadImage(){
         this.$refs.scroll.refresh();
+      },
+      selectItem(radio){
+        console.log(radio);
+
       }
     }
   }

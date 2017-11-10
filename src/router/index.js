@@ -15,6 +15,8 @@ import ClassifyDisc from '@/components/classifyDisc/classify-disc'
 import DiscList from './../components/discList/disc-list'
 import Search from './../components/search/search'
 
+import RadioList from './../components/radioList/radio-list'
+
 import Player from './../components/player/player'
 
 import Disc from './../components/disc/disc'
@@ -102,6 +104,11 @@ export default new Router({
       path: '/disc/:id',
       name: 'Disc',
       component: Disc
+    },
+    {
+      path: '/radioList/:id',
+      name: 'Radio',
+      component: RadioList
     },
     {
       path: '/search',

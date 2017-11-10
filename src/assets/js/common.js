@@ -94,6 +94,7 @@ export function crateSongList(songDate){
 }
 
 export function createDiscSongList(songData){
+  console.log(songData)
   let songList = [];
   songData.forEach((val, index)=>{
     let singer = [];
@@ -111,7 +112,7 @@ export function createDiscSongList(songData){
       singer: singer.join(' '),
       interval: val.interval,
       image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.albummid}.jpg?max_age=2592000`,  //https://y.gtimg.cn/music/photo_new/T002R300x300M000001ZaCQY2OxVMg.jpg?max_age=2592000
-      url: `http://ws.stream.qqmusic.qq.com/${val.songId}.m4a?fromtag=46`
+      url: `http://ws.stream.qqmusic.qq.com/${val.songid}.m4a?fromtag=46`
     }))
   })
   return songList
