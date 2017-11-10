@@ -1,6 +1,7 @@
 <template>
   <div class="find-box">
-    <scroll ref="scroll" :data="radioList">
+    <radio-list-view :data="radioList"></radio-list-view>
+    <!--<scroll ref="scroll" :data="radioList">
       <div class="radio-wrapper">
         <div class="radio" v-for="radio in radioList" @click="selectItem(radio)">
           <div class="radio-images">
@@ -10,13 +11,15 @@
           <p>播放量：{{radio.listenNum}}</p>
         </div>
       </div>
-    </scroll>
+    </scroll>-->
   </div>
 </template>
 <script type="text/ecmascript-6">
   import './findRadio.scss'
   import { getRadioList } from './../../../api/recommend'
+  import { crateRadioList } from './../../../assets/js/common'
   import scroll from './../../../unit/scroll/scroll'
+  import radioListView from './../../../unit/rListView/radio-list-view'
   export default {
     data(){
       return {
@@ -24,7 +27,8 @@
       }
     },
     components: {
-      scroll
+      scroll,
+      radioListView
     },
     created(){},
     mounted(){
@@ -38,7 +42,8 @@
           getRadioList().then((res)=>{
             console.log(res);
             if (res.code === 0){
-              this.radioList = res.data.data.groupList[0].radioList;
+              this.radioList = crateRadioList(res.data.data.groupList);
+              console.log(this.radioList)
             }
           })
         })

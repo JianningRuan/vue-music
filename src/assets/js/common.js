@@ -158,6 +158,32 @@ export function randomArray(arr){
   return _arr
 }
 
+//返回rListView所需数据
+export function crateRadioList(radioData){
+  let radioList = [];
+  radioData.forEach((val, index)=>{
+    let radio = {};
+    radio.name = val.name;
+    radio.type = val.type;
+    radio.list = [];
+    val.radioList.forEach((cVal, cIndex)=>{
+      let cRadio = {};
+      cRadio.num = cVal.listenNum;
+      cRadio.name = cVal.radioName;
+      cRadio.pic = cVal.radioImg;
+      cRadio.id = cVal.radioId;
+      radio.list.push(cRadio);
+    })
+    radioList.push(radio);
+  })
+  return radioList;
+  /*
+   [ {name: '', type: 1, list: [ {name: '', id: 1, num: 1, pic: ''}, {name: '', id: 2, num: 1, pic: ''} ] } ]
+   */
+}
+
+
+
 //
 let elementStyle = document.createElement('div').style;
 

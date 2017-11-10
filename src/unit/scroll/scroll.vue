@@ -68,8 +68,8 @@
       }
     },
     watch: {
-      data: function () {
-        this.$nextTick( () => {
+      data: function (){
+        this.$nextTick(() => {
           this.refresh();
         })
       }
