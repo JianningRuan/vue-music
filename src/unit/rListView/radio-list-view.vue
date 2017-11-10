@@ -1,6 +1,6 @@
 <template>
   <div class="radio-wrapper">
-    <scroll class="radio-scroll" ref="radioScroll" :data="data">
+    <scroll class="radio-scroll" ref="radioScroll" :data="data" :click="click" :listenScroll="listenScroll" :probeType="probeType" @scroll="scroll">
       <div>
         <div class="radio-box" v-for="radioGroup in data">
           <div class="radio" v-for="radio in radioGroup.list" @click="selectItem(radio.id)">
@@ -32,7 +32,11 @@
        */
     },
     data(){
-      return {}
+      return {
+        click: true,
+        listenScroll: true,
+        probeType: 3
+      }
     },
     components: {
       scroll
@@ -50,6 +54,9 @@
     },
     filters: {},
     methods: {
+      scroll(pos){
+
+      },
       //构建返回快速导航
       crateShortCutList(val){
         let item = {
