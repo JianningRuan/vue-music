@@ -217,8 +217,9 @@ apiRoutes.get('/getDiscList', function(req, res){
   })
 })
 //获取电台歌单
-apiRoutes.get('/getRadio', function(req, res){
-  var url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg';
+apiRoutes.get('/getRadioDisc', function(req, res){
+  //var url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg';
+  var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg';
   axios.get(url, {
     headers: {
       referer: 'https://c.y.qq.com/',
@@ -231,6 +232,8 @@ apiRoutes.get('/getRadio', function(req, res){
     console.log(e)
   })
 })
+//获取电台随机音乐
+
 app.use('/api', apiRoutes)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

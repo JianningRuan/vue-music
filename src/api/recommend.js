@@ -16,6 +16,42 @@ export function getRecommend() {
   return jsonp(url, data, options);
 }
 
+export function grtRadioDemo() {
+  const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg';
+  const  data = Object.assign({}, commonParam, {
+    callback: 'getradiosonglist838165422551227',
+    g_tk: 5381,
+    jsonpCallback: 'getradiosonglist838165422551227',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode: 0,
+    data:{
+      "songlist":{
+        "module":"pf.radiosvr",
+        "method":"GetRadiosonglist",
+        "param":{
+          "id":199,
+          "firstplay":1,
+          "num":10
+        }
+      },
+      "radiolist":{
+        "module":"pf.radiosvr",
+        "method":"GetRadiolist",
+        "param":{
+          "ct":"24"
+        }
+      },
+      "comm":{
+        "ct":"24"
+      }
+    }
+  })
+
+  return jsonp(url, data, options);
+}
+
 //歌单 jsonp
 export function getDiscByTag(num = 17) {
   //const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg';
@@ -81,8 +117,8 @@ export function getRadioList(){
   })
 }
 //电台歌单
-export function getRadio(albummid){
-  const url = '/api/getRadio';
+/export function getRadio(albummid){
+  const url = '/api/getRadioDisc';
   const data = Object.assign({}, commonParam, {
     albummid: albummid,
     jsonCallback: 'albuminfoCallback',

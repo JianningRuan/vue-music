@@ -23,6 +23,7 @@
   import './radio-list-view.scss'
   import scroll from './../../unit/scroll/scroll'
 
+
   export default {
     props: {
       data: Array,
@@ -64,6 +65,9 @@
           type: val.type
         };
         return item;
+      },
+      selectItem(id){
+        console.log(id)
       }
     }
   }

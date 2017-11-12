@@ -150,7 +150,7 @@
         }, 1000)
       },
       currentLyric(newVal){
-        console.log(newVal)
+        //console.log(newVal)
       },
       playing(newPlaying){
         this.$nextTick(()=>{
