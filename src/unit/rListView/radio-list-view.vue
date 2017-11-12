@@ -22,7 +22,7 @@
 <script type="text/ecmascript-6">
   import './radio-list-view.scss'
   import scroll from './../../unit/scroll/scroll'
-
+  import { getRadioDemo } from './../../api/recommend'
 
   export default {
     props: {
@@ -68,6 +68,9 @@
       },
       selectItem(id){
         console.log(id)
+        getRadioDemo().then((res)=>{
+          console.log(res)
+        })
       }
     }
   }
