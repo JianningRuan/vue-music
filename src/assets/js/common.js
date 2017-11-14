@@ -89,7 +89,7 @@ export function crateSongList(songDate){
       image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.musicData.albummid}.jpg?max_age=2592000`,
       url: `http://ws.stream.qqmusic.qq.com/${val.musicData.songid}.m4a?fromtag=46`
     }))
-  })
+  });
   return songList
 }
 
@@ -100,7 +100,7 @@ export function createDiscSongList(songData){
     let singer = [];
     val.singer.forEach((val)=>{
       singer.push(val.name)
-    })
+    });
     songList.push(new song({
       index: val.index,
       isNew: val.isnew,
@@ -114,7 +114,7 @@ export function createDiscSongList(songData){
       image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.albummid}.jpg?max_age=2592000`,  //https://y.gtimg.cn/music/photo_new/T002R300x300M000001ZaCQY2OxVMg.jpg?max_age=2592000
       url: `http://ws.stream.qqmusic.qq.com/${val.songid}.m4a?fromtag=46`
     }))
-  })
+  });
   return songList
 }
 
@@ -124,7 +124,7 @@ export function createRankSongList(songData){
     let singer = [];
     val.data.singer.forEach((val)=>{
       singer.push(val.name)
-    })
+    });
     songList.push(new song({
       index: index,
       isNew: 0,
@@ -138,7 +138,32 @@ export function createRankSongList(songData){
       image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.data.albummid}.jpg?max_age=2592000`,  //https://y.gtimg.cn/music/photo_new/T002R300x300M000001ZaCQY2OxVMg.jpg?max_age=2592000
       url: `http://ws.stream.qqmusic.qq.com/${val.data.songid}.m4a?fromtag=46`
     }))
-  })
+  });
+  return songList
+}
+
+export function createRadioSongList(songData){
+  let songList = [];
+  songData.forEach((val, index)=>{
+    console.log(val);
+    let singer = [];
+    val.singer.forEach((val)=>{
+      singer.push(val.name)
+    });
+    songList.push(new song({
+      index: index,
+      isNew: 0,
+      albumMid: val.album.mid,
+      albumName: val.album.name,
+      songId: val.id,
+      songMid: val.mid,
+      songName: val.name,
+      singer: singer.join(' '),
+      interval: val.interval,
+      image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${val.album.mid}.jpg?max_age=2592000`,  //https://y.gtimg.cn/music/photo_new/T002R300x300M000001ZaCQY2OxVMg.jpg?max_age=2592000
+      url: `http://ws.stream.qqmusic.qq.com/${val.id}.m4a?fromtag=46`
+    }))
+  });
   return songList
 }
 

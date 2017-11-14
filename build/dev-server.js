@@ -222,12 +222,20 @@ apiRoutes.get('/getRadioDisc', function(req, res){
   var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg';
   axios.get(url, {
     headers: {
-      referer: 'https://c.y.qq.com/',
-      host: 'c.y.qq.com'
+      referer: 'https://u.y.qq.com/',
+      host: 'u.y.qq.com'
     },
     params: req.query
   }).then((response)=>{
-    res.json(response.data)
+    var ret = response.data;
+    if (typeof ret === 'string') {
+      var reg = /^\w+\(({[^()]+})\)$/;
+      var matches = ret.match(reg);
+      if (matches) {
+        ret = JSON.parse(matches[1])
+      }
+    }
+    res.json(ret)
   }).catch((e)=>{
     console.log(e)
   })

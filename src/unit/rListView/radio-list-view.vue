@@ -22,7 +22,8 @@
 <script type="text/ecmascript-6">
   import './radio-list-view.scss'
   import scroll from './../../unit/scroll/scroll'
-  import { getRadioDemo } from './../../api/recommend'
+  import { getRadioDemo, getRadio } from './../../api/recommend'
+  import { createRadioSongList } from './../../assets/js/common'
 
   export default {
     props: {
@@ -68,8 +69,11 @@
       },
       selectItem(id){
         console.log(id)
-        getRadioDemo().then((res)=>{
+        getRadio().then((res)=>{
           console.log(res)
+          //切换歌单
+          let songList = createRadioSongList(res.songlist.data.track_list);
+          console.log(songList)
         })
       }
     }
