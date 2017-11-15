@@ -16,6 +16,48 @@ export function getRecommend() {
   return jsonp(url, data, options);
 }
 
+//热门搜索
+export function gethotkey(){
+  const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg';
+  const data = Object.assign({}, commonParam, {
+    g_tk: 5381,
+    uin: 0,
+    platform: 'h5',
+    needNewCode: 1,
+    _: 1510625754237
+  });
+
+  return jsonp(url, data, options);
+}
+
+//搜索结果
+export function getSearch(key){
+  const url = '/api/getSearch';
+  const data = Object.assign({}, commonParam, {
+    g_tk: 5381,
+    platform: 'h5',
+    needNewCode: 1,
+    w: key,
+    zhidaqu: 1,
+    catZhida: 1,
+    t: 0,
+    flag: 1,
+    ie: 'utf-8',
+    sem: 1,
+    aggr: 0,
+    perpage: 20,
+    n: 20,
+    p: 1,
+    remoteplace: 'txt.mqq.all',
+    _: 1510643101716
+  });
+  return axios(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  });
+}
+
 //歌单 jsonp
 export function getDiscByTag(num = 17) {
   //const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg';
@@ -84,35 +126,13 @@ export function getRadioList(){
 export function getRadio(id){
   const url = '/api/getRadioDisc';
   const data = Object.assign({}, commonParam, {
-    callback: 'getradiosonglist',
+    labelid: id,
     g_tk: 5381,
-    jsonCallback: 'getradiosonglist',
-    loginUin: 0,
-    hostUin: 0,
-    platform: 'yqq',
-    needNewCode: 0,
-    data: JSON.stringify({
-      songlist:{
-        module: "pf.radiosvr",
-        method: "GetRadiosonglist",
-        param:{
-          id: id,
-          firstplay: 1,
-          num: 10
-        }
-      },
-      radiolist:{
-        module: "pf.radiosvr",
-        method: "GetRadiolist",
-        param:{
-          ct: "24"
-        }
-      },
-      comm:{
-        ct: "24"
-      }
-    })
-  })
+    uin: 0,
+    platform: 'h5',
+    needNewCode: 1,
+    _: 1510582149276
+  });
   return axios(url, {
     params: data
   }).then((res)=>{

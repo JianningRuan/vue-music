@@ -22,8 +22,9 @@
 <script type="text/ecmascript-6">
   import './radio-list-view.scss'
   import scroll from './../../unit/scroll/scroll'
-  import { getRadioDemo, getRadio } from './../../api/recommend'
+  import { getRadio } from './../../api/recommend'
   import { createRadioSongList } from './../../assets/js/common'
+  import { mapMutations } from 'vuex'
 
   export default {
     props: {
@@ -68,14 +69,16 @@
         return item;
       },
       selectItem(id){
-        console.log(id)
-        getRadio().then((res)=>{
-          console.log(res)
+        getRadio(id).then((res)=>{
+          console.log(res);
           //切换歌单
-          let songList = createRadioSongList(res.songlist.data.track_list);
-          console.log(songList)
+          let songList = createRadioSongList(res.data);
+          this.setPlayList(songList)
         })
-      }
+      },
+      ...mapMutations({
+        setPlayList: 'SET_PLAY_LIST'
+      })
     }
   }
 </script>

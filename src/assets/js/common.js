@@ -145,7 +145,6 @@ export function createRankSongList(songData){
 export function createRadioSongList(songData){
   let songList = [];
   songData.forEach((val, index)=>{
-    console.log(val);
     let singer = [];
     val.singer.forEach((val)=>{
       singer.push(val.name)
@@ -206,8 +205,6 @@ export function crateRadioList(radioData){
    [ {name: '', type: 1, list: [ {name: '', id: 1, num: 1, pic: ''}, {name: '', id: 2, num: 1, pic: ''} ] } ]
    */
 }
-
-
 
 //
 let elementStyle = document.createElement('div').style;

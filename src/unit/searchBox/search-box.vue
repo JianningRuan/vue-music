@@ -14,7 +14,7 @@
     props: {
       title: {
         type: String,
-        default: '输入歌曲、歌手'
+        default: '搜索歌曲、歌手、专辑'
       }
     },
     data(){

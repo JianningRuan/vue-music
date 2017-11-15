@@ -218,12 +218,11 @@ apiRoutes.get('/getDiscList', function(req, res){
 })
 //获取电台歌单
 apiRoutes.get('/getRadioDisc', function(req, res){
-  //var url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg';
-  var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg';
+  var url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_radiosonglist.fcg';
   axios.get(url, {
     headers: {
-      referer: 'https://u.y.qq.com/',
-      host: 'u.y.qq.com'
+      referer: 'https://c.y.qq.com/',
+      host: 'c.y.qq.com'
     },
     params: req.query
   }).then((response)=>{
@@ -240,7 +239,21 @@ apiRoutes.get('/getRadioDisc', function(req, res){
     console.log(e)
   })
 })
-//获取电台随机音乐
+//搜索
+apiRoutes.get('/getSearch', function(req, res){
+  var url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp';
+  axios.get(url, {
+    headers: {
+      referer: 'https://c.y.qq.com/',
+      host: 'c.y.qq.com'
+    },
+    params: req.query
+  }).then((response)=>{
+    res.json(response.data)
+  }).catch((e)=>{
+    console.log(e)
+  })
+})
 
 app.use('/api', apiRoutes)
 
