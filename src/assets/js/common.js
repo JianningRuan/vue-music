@@ -102,7 +102,7 @@ export function createDiscSongList(songData){
       singer.push(val.name)
     });
     songList.push(new song({
-      index: val.index,
+      index: index,
       isNew: val.isnew,
       albumMid: val.albummid,
       albumName: val.albumname,

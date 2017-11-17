@@ -1,7 +1,10 @@
 <template>
-  <scroll :data="result">
+  <scroll :data="resultList">
     <ul>
-      <li></li>
+      <li @click="selectItem(result)" v-for="result in resultList">
+        <i class="iconfont" :class="selectIcon(result)"></i>
+        <span v-html="selectTitle(result)"></span>
+      </li>
     </ul>
   </scroll>
 </template>
@@ -9,7 +12,7 @@
   import './suggest.scss'
   import scroll from './../../unit/scroll/scroll'
   import { getSearch } from './../../api/recommend'
-  //import { crateSearchReult } from './../../assets/js/common'
+  import { createDiscSongList } from './../../assets/js/common'
 
   const SINGER = 'singer';
 
@@ -23,7 +26,7 @@
     },
     data(){
       return {
-        result: []
+        resultList: []
       }
     },
     components: {
@@ -37,7 +40,7 @@
         getSearch(newVal).then((res)=>{
           console.log(res)
           if (res.code === 0){
-            this.result = this._crateSearchReult(res.data);
+            this.resultList = this._crateSearchResult(res.data);
           }
         })
       }
@@ -45,12 +48,36 @@
     computed:{},
     filters: {},
     methods: {
-      _crateSearchReult(searchData){
+      _crateSearchResult(searchData){
         let result = [];
         if (searchData.zhida && searchData.zhida.singerid){
           result.push({...searchData.zhida, ...{type: SINGER}})
         }
-        console.log(result)
+        if (searchData.song){
+          result = result.concat(createDiscSongList(searchData.song.list));
+        }
+        console.log(result);
+        return result
+      },
+      //icon的选择
+      selectIcon(data){
+        if (data.type == SINGER){
+          return 'icon-user'; //返回歌手的icon
+        }else {
+          return 'icon-music'; //返回音乐的icon
+        }
+      },
+      //文字的选择
+      selectTitle(data){
+        if (data.type == SINGER){
+          return data.singername;
+        }else {
+          return `${data.songName} - ${data.singer}`
+        }
+      },
+      //点击执行
+      selectItem(data){
+
       }
     }
   }
