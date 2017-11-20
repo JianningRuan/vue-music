@@ -1,5 +1,5 @@
 <template>
-  <scroll :data="resultList">
+  <scroll :data="resultList" :pullUp="pullUp" @scrollToEnd="scrollToEnd">
     <ul>
       <li @click="selectItem(result)" v-for="result in resultList">
         <i class="iconfont" :class="selectIcon(result)"></i>
@@ -26,7 +26,8 @@
     },
     data(){
       return {
-        resultList: []
+        resultList: [],
+        pullUp: true
       }
     },
     components: {
@@ -48,7 +49,7 @@
     computed:{},
     filters: {},
     methods: {
-      _crateSearchResult(searchData){
+        _crateSearchResult(searchData){
         let result = [];
         if (searchData.zhida && searchData.zhida.singerid){
           result.push({...searchData.zhida, ...{type: SINGER}})
@@ -78,6 +79,10 @@
       //点击执行
       selectItem(data){
 
+      },
+      //监听滚动完毕
+      scrollToEnd(){
+        console.log('滚动到底了')
       }
     }
   }
