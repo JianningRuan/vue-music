@@ -1,7 +1,7 @@
 <template>
-  <scroll :data="resultList" :pullUp="pullUp" @scrollToEnd="scrollToEnd">
+  <scroll ref="suggest" class="suggest" :data="resultList" :pullUp="pullUp" @scrollToEnd="scrollToEnd">
     <ul>
-      <li @click="selectItem(result)" v-for="result in resultList">
+      <li class="search-list" @click="selectItem(result)" v-for="result in resultList">
         <i class="iconfont" :class="selectIcon(result)"></i>
         <span v-html="selectTitle(result)"></span>
       </li>
@@ -12,7 +12,8 @@
   import './suggest.scss'
   import scroll from './../../unit/scroll/scroll'
   import { getSearch } from './../../api/recommend'
-  import { createDiscSongList } from './../../assets/js/common'
+  import { createDiscSongList, singer } from './../../assets/js/common'
+  import { mapMutations, mapActions } from 'vuex'
 
   const SINGER = 'singer';
 
@@ -38,17 +39,24 @@
     activated(){},
     watch: {
       query(newVal){
-        getSearch(newVal).then((res)=>{
-          console.log(res)
-          if (res.code === 0){
-            this.resultList = this._crateSearchResult(res.data);
-          }
-        })
+        this.search(newVal)
       }
     },
     computed:{},
     filters: {},
     methods: {
+        search(newVal){
+          //搜索的内容改变的时候，页面重置。内容重置
+          this.page = 1;
+          this.resultList = [];
+          this.$refs.suggest.scroll(0, 0);//回滚到最顶部
+          getSearch(newVal, this.page).then((res)=>{
+            console.log(res);
+            if (res.code === 0){
+              this.resultList = this._crateSearchResult(res.data);
+            }
+          })
+        },
         _crateSearchResult(searchData){
         let result = [];
         if (searchData.zhida && searchData.zhida.singerid){
@@ -78,12 +86,33 @@
       },
       //点击执行
       selectItem(data){
+        if (data.type == SINGER){
+          this.setSinger(new singer({
+            id:data.singerid,
+            mid: data.singermid,
+            name: data.singername
+          }));
+          this.$router.push({
+            path: `/singer/${data.singermid}`
+          })
+        }else {
 
+        }
       },
       //监听滚动完毕
       scrollToEnd(){
+        this.page++;
+        getSearch(this.query, this.page).then((res)=>{
+          console.log(res);
+          if (res.code === 0){
+            this.resultList = this.resultList.concat(createDiscSongList(res.data.song.list));
+          }
+        });
         console.log('滚动到底了')
-      }
+      },
+      ...mapMutations({
+        setSinger: 'SET_SINGER'
+      })
     }
   }
 </script>

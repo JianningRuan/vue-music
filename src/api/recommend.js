@@ -31,7 +31,7 @@ export function gethotkey(){
 }
 
 //搜索结果
-export function getSearch(key){
+export function getSearch(key, page, zhida = true, perpage = 20){
   const url = '/api/getSearch';
   const data = Object.assign({}, commonParam, {
     g_tk: 5381,
@@ -39,15 +39,15 @@ export function getSearch(key){
     needNewCode: 1,
     w: key,
     zhidaqu: 1,
-    catZhida: 1,
+    catZhida: zhida? 1 : 0,
     t: 0,
     flag: 1,
     ie: 'utf-8',
     sem: 1,
     aggr: 0,
-    perpage: 20,
-    n: 20,
-    p: 1,
+    perpage: perpage,
+    n: perpage,
+    p: page,
     remoteplace: 'txt.mqq.all',
     _: 1510643101716
   });
